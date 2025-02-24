@@ -16,7 +16,7 @@ export function UserIcon() {
     const cookie = Cookie();
     const token = cookie.get("e-commerce");
 
-    // User fetch function
+
     const fetchUser = useCallback(async () => {
         if (!token) return;
 
@@ -35,7 +35,7 @@ export function UserIcon() {
         fetchUser();
     }, [fetchUser]);
 
-    // Function to handle logout
+
     async function handleLogOut() {
         try {
             const res = await axios.get(
