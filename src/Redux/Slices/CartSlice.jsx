@@ -37,7 +37,7 @@ const CartSlice = createSlice({
         state.totalItems = state.items.reduce((total, item) => total + item.count, 0)
         },
         handlePopUp: (state, action) => {
-            console.log(action.payload)
+        
             if (action.payload === "removing") state.removed = true;
             else if (action.payload === "adding") state.added = true;
             else if (action.payload === "reset"){

@@ -4,14 +4,15 @@ import { DropdownButton } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Cookie  from 'cookie-universal';
-import { Menu } from "../../context/menucontext";
+
 import axios from "axios";
 import { baseUrl, LOGOUT, USER } from "../../Api/Api";
 import LoadingSubmit from './../Loading/loading';
+import { useDispatch } from "react-redux";
+import { toggleMenu } from "../../Redux/Slices/MenuSlice";
 
 export default function NavigationBar() {
-    const menuOpen = useContext(Menu);
-    const isOpen = menuOpen.isOpen;
+    const dispatch = useDispatch();
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
     // Cookies
@@ -54,7 +55,7 @@ export default function NavigationBar() {
   return (
   <div className="flex justify-center w-full">
     <div className="flex p-2 px-3 mb-4 shadow rounded align-center justify-between gap-5 w-[100%] bg-white"> 
-        <FontAwesomeIcon onClick={() => menuOpen.setIsOpen(prev => !prev)} icon={faBars} style={{
+        <FontAwesomeIcon onClick={() => dispatch(toggleMenu())} icon={faBars} style={{
         transform: "translateY(-20%)",
         fontSize: "1.1rem",
         cursor: "pointer",

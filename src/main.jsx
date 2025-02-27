@@ -13,7 +13,7 @@ import "./Pages/Dashboard/dashboard.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "animate.css";
 import "./custom.css";
-import MenuContext from "./context/menucontext";
+
 import WindowResize from "./context/windowresize";
 import { Provider } from "react-redux";
 import { store } from "./Redux/store";
@@ -25,9 +25,7 @@ const rootElement = document.getElementById("root");
     <Provider store={store}>
     <BrowserRouter>
     <WindowResize>
-    <MenuContext>
     <App />
-    </MenuContext>
     </WindowResize>
     </BrowserRouter>
     </Provider>

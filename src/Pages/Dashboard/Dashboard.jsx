@@ -2,14 +2,15 @@ import {  Outlet } from "react-router-dom";
 import { SideBar } from "../../Components/Dashboard/sidebar";
 import { useContext } from "react";
 import { WindowSize } from "../../context/windowresize";
-import { Menu } from "../../context/menucontext";
+
 import NavigationBar from "../../Components/Dashboard/NavBar";
+import { useSelector } from "react-redux";
 
 
 export default function Dashboard() {
     const resizeWidth = useContext(WindowSize);
-    const menuOpen = useContext(Menu);
-    const isOpen = menuOpen.isOpen;
+
+    const isOpen = useSelector((state) => state.menu.isOpen)
 
     return (
         <>

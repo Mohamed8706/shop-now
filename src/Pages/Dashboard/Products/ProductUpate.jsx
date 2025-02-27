@@ -6,8 +6,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import LoadingSubmit from '../../../Components/Loading/loading';
 import  Cookie  from 'cookie-universal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { Menu } from "../../../context/menucontext";
+import {faTrash } from "@fortawesome/free-solid-svg-icons";
+
 import update from "../../../Assets/upload.png"
 
 
@@ -23,8 +23,7 @@ const [form, setForm] = useState({
     stock: ''
 });
 
-const menuOpen = useContext(Menu);
-const isOpen = menuOpen.isOpen;
+
 
 const [images, setImages] = useState([]);
 const [productImages, setProductImages] = useState([]);
