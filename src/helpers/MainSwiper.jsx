@@ -24,13 +24,13 @@ return (
             <button
             disabled={swiperInstance.beginning}
             className={`prev-${uniqeId} flex justify-center items-center transition-all duration-300 
-            w-[38px] h-[38px] rounded-[10px] bg-[#F1F1F1] text-[#222222]`}>
+            w-[38px] h-[38px] !rounded-[10px] bg-[#F1F1F1] text-[#222222]`}>
             <ChevronLeft />
             </button>
             <button
             disabled={swiperInstance.end}
             className={`next-${uniqeId} flex justify-center items-center  transition-all duration-300 
-            w-[38px] h-[38px] rounded-[10px] bg-[#F1F1F1] text-[#222222]`}>
+            w-[38px] h-[38px] !rounded-[10px] bg-[#F1F1F1] text-[#222222]`}>
             <ChevronRight />
             </button>
         </div>

@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = {
     items: JSON.parse(localStorage.getItem("Cart")) || [],
     totalPrice : 0,
     totalItems: 0,
     added: false,
-    removed: false
+    removed: false,
+    isOpen: false
 }
 
 
@@ -42,9 +44,13 @@ const CartSlice = createSlice({
                 state.added = false;
                 state.removed = false;
             }
+        },
+        openCart: (state, action) => {
+            if (action.payload === "open") state.isOpen = true;
+            if (action.payload === "close") state.isOpen = false;
         }
     }
 })
 
-export const {addToCart, removeFromCart, calculateTotals, handlePopUp} = CartSlice.actions;
+export const {addToCart, removeFromCart, calculateTotals, handlePopUp, openCart} = CartSlice.actions;
 export default CartSlice.reducer;

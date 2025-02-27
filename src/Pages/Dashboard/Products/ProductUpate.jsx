@@ -8,8 +8,7 @@ import  Cookie  from 'cookie-universal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Menu } from "../../../context/menucontext";
-import useSWR from "swr";
-
+import update from "../../../Assets/upload.png"
 
 
 export default function ProductUpdate() {
@@ -109,13 +108,18 @@ async function handleUpdate(e) {
 let j = useRef(-1)
 // Handle images changes
 async function HandleImagesChanges(e) {
-    setImages((prev) => [...prev, ...e.target.files]);
-    const imagesAsFiles = e.target.files;
+    const files = Array.from(e.target.files);
+    const previewImages = files.map((file) => ({
+        file,
+        preview: URL.createObjectURL(file), // Generate preview URL
+    }));
 
-    for (let i = 0; i < imagesAsFiles.length; i++) {
+    setImages((prev) => [...prev, ...previewImages]);
+
+    for (let i = 0; i < files.length; i++) {
         j.current++;
         const data = new FormData();
-        data.append("image", imagesAsFiles[i]);
+        data.append("image", files[i]);
         data.append("product_id", id);
         try {
             const res = await axios.post(`${baseUrl}/product-img/add`, data, {
@@ -123,20 +127,20 @@ async function HandleImagesChanges(e) {
                     Authorization: "Bearer " + token
                 },
                 onUploadProgress: (ProgressEvent) => {
-                    const {loaded, total} = ProgressEvent;
+                    const { loaded, total } = ProgressEvent;
                     const result = Math.floor((loaded * 100) / total);
                     if (result % 10 === 0) {
                         progress.current[j.current].style.width = `${result}%`;
                         progress.current[j.current].setAttribute('percent', result + '%');
                     }
                 } 
-            }).then((data) => imagesId.current[j.current] = data.data.id)
+            }).then((data) => imagesId.current[j.current] = data.data.id);
         } catch (error) {
-            console.log("Could not send the image", error)
+            console.log("Could not send the image", error);
         }
-        
     }
 }
+
 
     // Handle deleting old images 
 function ProductImagesChanges(image) {
@@ -162,7 +166,7 @@ async function handleDeletingProductImages() {
 
 // Handle Deleting new images
 async function HandleDeletingImages(id, name) {
-    setImages((prev) => prev.filter((img) => img.name !== name));
+    setImages((prev) => prev.filter((img) => img.file.name !== name));
     imagesId.current = imagesId.current.filter((i) => i !== id);
     j.current--;
     try {
@@ -177,26 +181,29 @@ async function HandleDeletingImages(id, name) {
 }
 
 // Maping 
-const imagesShow = images.map((img, key) => 
+const imagesShow = images.map((img, key) => (
     <div key={key} className="w-100 relative border p-2">
-    <div className="flex flex-row gap-2 ">
-    <img src={img} alt="product" className="w-[80px]"/>
-    <div>
-        <p className="mb-1">{img.name}</p>
-        <p>{(img.size / 1024 < 900 ? (img.size / 1024).toFixed(2) + "KB" : 
-        (img.size / (1024 * 1024)).toFixed(2) + 'MB' )}</p>
-    </div>
-    </div>
-    <div  className="custom-progress">
+        <div className="flex flex-row gap-2 ">
+            <img src={img.preview} alt="Preview" className="w-[80px]" />
+            <div>
+                <p className="mb-1">{img.file.name}</p>
+                <p>{(img.file.size / 1024 < 900 ? (img.file.size / 1024).toFixed(2) + "KB" : 
+                    (img.file.size / (1024 * 1024)).toFixed(2) + 'MB' )}
+                </p>
+            </div>
+        </div>
+        <div className="custom-progress">
             <span ref={(e) => [progress.current[key] = e]} className="inner-progress"></span>
-    </div>
-            <FontAwesomeIcon icon={faTrash} style={{color: "orangered"}} 
+        </div>
+        <FontAwesomeIcon 
+            icon={faTrash} 
+            style={{color: "orangered"}} 
             className="w-[30px] h-[30px] cursor-pointer mr-[8px] absolute right-4 top-4"
-            onClick={() => HandleDeletingImages(imagesId.current[key], img.name)}
-            /> 
-        
+            onClick={() => HandleDeletingImages(imagesId.current[key], img.file.name)}
+        /> 
     </div>
-    )
+));
+
     const k = useRef(-1);
     const showProductImages = productImages.map((img, key) => 
     <div key={key} className="w-100 relative border p-2">
@@ -376,7 +383,7 @@ const imagesShow = images.map((img, key) =>
             gap-2 "
         style={{border:"2px dashed #0086fe", cursor:"pointer"}}
         >
-        <img  src={require("../../../Assets/upload.png")} alt="upload" className="w-[100px]"/>
+        <img  src={update} alt="upload" className="w-[100px]"/>
         <p style={{color: "#0086fe"}} className="font-bold">Upload Images</p>
         </div>
     <div className="flex flex-col p-4 items-start justify-center gap-4">

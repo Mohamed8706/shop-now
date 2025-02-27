@@ -1,10 +1,14 @@
-import { Link, useNavigate } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom"
+import { openCart } from "../../../Redux/Slices/CartSlice";
 
 export default function NavButton() {
     const handleFocus = () => {
         const search = document.querySelector(".cat-search");
         search.focus();
     }
+    const dispatch = useDispatch();
+    const cartItems = useSelector((state) => state.cart.totalItems);
 
         return (
                 <div className="button-container">
@@ -60,7 +64,7 @@ export default function NavButton() {
                         </button>
                         </Link>
 
-                        <button className="button">
+                        <button className="button relative" onClick={()=> dispatch(openCart("open"))} >
                             <svg
                                 className="icon"
                                 stroke="currentColor"
@@ -77,6 +81,9 @@ export default function NavButton() {
                                 <circle cx="20" cy="21" r="1"></circle>
                                 <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
                             </svg>
+                            {cartItems > 0 && (
+                            <span className="absolute bottom-5 -right-2 bg-red-400 text-white rounded-full 
+                            w-6 h-6 flex justify-center items-center">{cartItems}</span>)}
                         </button>
                     </div>
             )}

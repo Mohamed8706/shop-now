@@ -4,13 +4,12 @@ import { Offcanvas } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
-import { calculateTotals, handlePopUp, removeFromCart } from "../../../Redux/Slices/CartSlice";
+import { calculateTotals, handlePopUp, openCart, removeFromCart } from "../../../Redux/Slices/CartSlice";
 
 
 export default function Cart() {
     // States
-    const [show, setShow] = useState(false);
-    
+    const show = useSelector((state) => state.cart.isOpen);
 
     const cartData = useSelector((state) => state.cart)   
     
@@ -21,8 +20,8 @@ export default function Cart() {
         dispatch(calculateTotals())
     }, [cartData])
 
-    const handleShow = () => setShow(true);
-    const handleClose = useCallback(() => setShow(false), [setShow]);
+    const handleShow = () => dispatch(openCart("open"));
+    const handleClose = () => dispatch(openCart("close"));
 
 
 const renderCartItems = useMemo(() => {
