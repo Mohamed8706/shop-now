@@ -3,11 +3,12 @@ import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
 import { baseUrl, Product } from "../../../Api/Api";
 import SingleProductSekelton from "../../../Components/Loading/SingleProductSkeleton";
-
 import ProductCounter from "../../../Components/Website/Utils/ProductCounter";
 import { ImageGallery } from './../../../Components/Website/Utils/ImageGallery';
 import { RatingStars } from './../../../helpers/RatingStars';
-import useAddToCart from "../../../hooks/useAddToCart";
+import { useDispatch } from 'react-redux';
+import { addToCart, handlePopUp } from "../../../Redux/Slices/CartSlice";
+
 
 export default function SingleProduct() {
     // States
@@ -15,12 +16,11 @@ export default function SingleProduct() {
     const [loading, setLoading] = useState(false);
     const [img, setImg] = useState([]);
     const [qty, setQty] = useState(1);
-
-    const addToCart = useAddToCart(); // ✅ Now correctly defined as a function
-
+    const dispatch =  useDispatch()
     const handleAddToCart = () => {
         if (qty > 0 && product.stock >= qty) {
-            addToCart(product, qty); // ✅ Pass data and qty correctly
+            dispatch(addToCart({product, qty}))
+            dispatch(handlePopUp("adding"))
         }
     };
 
@@ -102,7 +102,8 @@ export default function SingleProduct() {
                                 <p className="text-gray-400 text-xl">Total Price</p>
                                 <p className="text-gray-500 text-3xl">${totalPrice}</p>
                             </div>
-                            <button disabled={qty <= 0 || qty > product.stock} onClick={handleAddToCart} className="btn-second rounded-full w-1/3">
+                            <button disabled={qty <= 0 || qty > product.stock} onClick={handleAddToCart} 
+                            className="btn-second !rounded-full w-1/3">
                                 Add To Cart
                             </button>
                         </div>

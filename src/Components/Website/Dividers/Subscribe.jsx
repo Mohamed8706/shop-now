@@ -14,7 +14,7 @@ export default function Subscribe() {
                     <input type="email" placeholder="Enter Your Email" 
                     className="p-4  bg-white outline-none rounded-full w-[90%]">
                     </input>
-                    <button className="btn-second md:w-2/5 rounded-full text-xl">SUBSCRIBE</button>
+                    <button className="btn-second md:w-2/5 !rounded-full text-xl">SUBSCRIBE</button>
                     </div>
                 </Container>
             </section>

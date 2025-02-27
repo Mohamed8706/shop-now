@@ -1,5 +1,4 @@
 import { SearchBar } from './SearchBar';
-import { useContext } from "react";
 import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserIcon } from './UserIcon';
@@ -10,7 +9,6 @@ import Logo from './../../../Assets/Elegant_Online_Shopping_Logo_Template-remove
 
 
 export default function TopBar() {
-
 
     return (
         <>

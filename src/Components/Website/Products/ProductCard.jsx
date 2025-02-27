@@ -3,16 +3,20 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import ProductCounter from "../Utils/ProductCounter";
-import useAddToCart from "../../../hooks/useAddToCart";
+import { useDispatch } from "react-redux";
+import { addToCart, handlePopUp } from "../../../Redux/Slices/CartSlice";
+import { RatingStars } from "../../../helpers/RatingStars";
+
 
 
 export default function ProductCard({ data }) {
     const [qty, setQty] = useState(1);
-    const addToCart = useAddToCart(); 
-
+    const dispatch = useDispatch();
     const handleAddToCart = () => {
         if (qty > 0 && data.stock >= qty) {
-            addToCart(data, qty); 
+            dispatch(addToCart({product : data, qty}))
+            dispatch(handlePopUp("adding"))
+            
         }
     };
 
@@ -39,7 +43,7 @@ export default function ProductCard({ data }) {
                     {data.title}
                 </h4>
                 <div className="flex justify-start items-center gap-2 font-bold">
-                    <span>{data.rating}</span>
+                    <RatingStars rating={data.rating} />
                 </div>
                 <div className="flex w-full flex-col items-stretch justify-start">
                     <h4 className="text-gray-800 font-bold">${data.price}</h4>

@@ -1,30 +1,32 @@
-import { CheckCircle } from "lucide-react";
+import { CheckCircle, XCircle } from "lucide-react";
 import { motion } from 'framer-motion';
 import { useContext, useEffect } from "react";
-import { Cart } from "../context/addToCartContext";
+import { useDispatch, useSelector } from "react-redux";
+import { handlePopUp } from "../Redux/Slices/CartSlice";
 
 
 export default function AddToCartPopup() {
-    const { cart, setCart } = useContext(Cart);
-
+    const dispatch = useDispatch();
+    const added = useSelector((state) => state.cart.added);
+    const removed = useSelector((state) => state.cart.removed);
     useEffect(() => {
-        if (cart) { 
-            const timer = setTimeout(() => setCart(false), 3000); // Hide after 3 sec
+        if (added || removed) { 
+            const timer = setTimeout(() => dispatch(handlePopUp("reset")), 1000); // Hide after 1 sec
             return () => clearTimeout(timer);
         }
-    }, [cart]);
+    }, [added, removed]);
 
-    if (!cart) return null; // Hide the popup when cart is false
-
-    return (
+    if (added || removed) return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
-            className="fixed top-5 right-5 bg-white shadow-lg p-4 z-[1000]
+            className="fixed top-5 right-5 bg-white shadow-lg p-4 z-[2000]
             rounded-2xl flex items-center gap-3 border border-gray-200">
-            <CheckCircle className="text-green-500" size={24} />
-            <p className="text-sm font-medium">Added to Cart</p>
+                {added && <><CheckCircle className="text-green-500" size={24} />
+            <p className="text-sm font-medium">Added to Cart</p></> }
+            {removed && <><XCircle className="text-red-500" size={24} />
+            <p className="text-sm font-medium">Removed from Cart</p></>}
         </motion.div>
     );
 }

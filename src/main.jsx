@@ -15,21 +15,22 @@ import "animate.css";
 import "./custom.css";
 import MenuContext from "./context/menucontext";
 import WindowResize from "./context/windowresize";
-import CartContext from './context/addToCartContext';
+import { Provider } from "react-redux";
+import { store } from "./Redux/store";
 
 const rootElement = document.getElementById("root");
 
   ReactDOM.createRoot(rootElement).render(
     <StrictMode>
-      <BrowserRouter>
+    <Provider store={store}>
+    <BrowserRouter>
     <WindowResize>
     <MenuContext>
-    <CartContext>
     <App />
-    </CartContext>
     </MenuContext>
     </WindowResize>
-      </BrowserRouter>
+    </BrowserRouter>
+    </Provider>
     </StrictMode>
   );
 
