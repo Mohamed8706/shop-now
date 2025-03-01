@@ -20,6 +20,7 @@ import CategoryUpdate from "./Pages/Dashboard/Categroies/CategoryUpdate";
 import ProductsPage from "./Pages/Dashboard/Products/Products";
 import AddProduct from "./Pages/Dashboard/Products/AddProduct";
 import ProductUpdate from "./Pages/Dashboard/Products/ProductUpate";
+import { useAuth } from "./hooks/useAuth";
 const Dashboard = lazy(() => import('./Pages/Dashboard/Dashboard'));
 
 
@@ -28,6 +29,7 @@ const Dashboard = lazy(() => import('./Pages/Dashboard/Dashboard'));
 
 
 export default function App() {
+
     return (
         <div className="app">
             <Routes>

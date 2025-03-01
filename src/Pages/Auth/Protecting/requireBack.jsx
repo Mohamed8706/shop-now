@@ -1,12 +1,10 @@
-import { useQueryClient } from '@tanstack/react-query';
-import Cookie  from 'cookie-universal';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import Cookie from "cookie-universal";
 
 export default function RequireBack() {
+    const cookies = Cookie();
+    const token = cookies.get("e-commerce");
 
-    const queryClient = useQueryClient();
-    const user = queryClient.getQueryData(["user"]);
 
-
-    return user ? window.history.back() : <Outlet />;
+    return token ? <Navigate to="/" /> : <Outlet />;
 }

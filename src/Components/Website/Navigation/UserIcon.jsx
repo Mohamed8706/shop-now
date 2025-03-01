@@ -7,10 +7,9 @@ import { NavLink } from "react-router-dom";
 
 
 export function UserIcon() {
-    const {logout, isLoggingOut} = useAuth();
+    const {logout} = useAuth();
     const queryClient = useQueryClient();
     const user = queryClient.getQueryData(["user"]);
-    console.log(user)
     return (
         <DropdownButton
             id="dropdown-basic-button"
