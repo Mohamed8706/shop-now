@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { baseUrl, Product, Products } from "../../../Api/Api";
+import { baseUrl, Product, Products } from "../../../Services/Api";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookie from "cookie-universal";

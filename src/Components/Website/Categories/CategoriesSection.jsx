@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 import MainSwiper from "../../../helpers/MainSwiper";
 import axios from "axios";
 import useSWR from "swr";
-import { baseUrl } from "../../../Api/Api";
+import { baseUrl } from "../../../Services/Api";
 import CategoryCard from "./CategoryCard";
 import CategorySkeleton from "../../Loading/CategorySkeleton";
 

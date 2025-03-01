@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import axios from "axios";
-import { baseUrl, USER } from "../../../Api/Api";
+import { baseUrl, USER } from "../../../Services/Api";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingSubmit from '../../../Components/Loading/loading';
 import  Cookie  from 'cookie-universal';

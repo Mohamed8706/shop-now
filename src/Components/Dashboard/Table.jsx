@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { FormControl, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { baseUrl } from "../../Api/Api";
+import { baseUrl } from "../../Services/Api";
 import Cookie from "cookie-universal";
 import TableLoading from "./../Loading/tableLoading";
 import PaginatedItems from "./Pagination/Pagination";

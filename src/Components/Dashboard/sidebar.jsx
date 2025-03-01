@@ -1,32 +1,20 @@
-    import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-    import { memo, useContext } from "react";
-    import { NavLink } from "react-router-dom";
-    import { WindowSize } from "../../context/windowresize";
-    import Cookie from "cookie-universal";
-    import { useEffect, useState } from "react";
-    import { baseUrl, USER } from "./../../Api/Api";
-    import axios from "axios";
-    import { links } from "./links";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { memo, useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { WindowSize } from "../../context/windowresize";
+
+import { useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { links } from "./links";
 import { useSelector } from "react-redux";
 
-    export const SideBar = memo(function SideBar() {
+export const SideBar = memo(function SideBar() {
     const isOpen = useSelector((state) => state.menu.isOpen);
     const resizeWidth = useContext(WindowSize);
-    const [user, setUser] = useState("");
+    const queryClient = useQueryClient();
+    const user = queryClient.getQueryData(["user"]);
 
-    const cookie = Cookie();
-    const token = cookie.get("e-commerce");
 
-    useEffect(() => {
-        axios
-        .get(`${baseUrl}/${USER}`, {
-            headers: {
-            Authorization: "Bearer " + token,
-            },
-        })
-        .then((data) => setUser(data.data))
-        .catch((err) => console.log(err));
-    }, []);
 
     return (
         <div

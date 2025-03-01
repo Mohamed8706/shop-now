@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { ADD, REGISTER, USER, baseUrl } from "../../../Api/Api";
+import { ADD, REGISTER, USER, baseUrl } from "../../../Services/Api";
 import axios from "axios";
 import LoadingSubmit from '../../../Components/Loading/loading';
 import { useNavigate } from "react-router-dom";

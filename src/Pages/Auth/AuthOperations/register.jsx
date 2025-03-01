@@ -1,11 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { REGISTER, baseUrl } from "../../../Api/Api";
-import axios from "axios";
 import LoadingSubmit from '../../../Components/Loading/loading';
-import { useNavigate } from "react-router-dom";
-import Cookie from 'cookie-universal';
+
 import { Form } from "react-bootstrap";
 import GoogleIcon from "../../../Assets/icons8-google.svg";
+
+import { useAuth } from "../../../hooks/useAuth";
 
 
 
@@ -17,17 +16,7 @@ import GoogleIcon from "../../../Assets/icons8-google.svg";
     password: ""
     });
 
-
-    // Loading
-    const [loading, setLoading] = useState(false);
-
-
-    // Err
-    const [err, setErr] = useState("");
-
-
-    // Navigate
-    const nav = useNavigate();
+    const {register, isRegistering, registerError} = useAuth();
 
     // Ref
     const focus = useRef("");
@@ -38,42 +27,21 @@ import GoogleIcon from "../../../Assets/icons8-google.svg";
     }, [])
 
 
-    // Cookie
-    const cookie = Cookie();
     // handle form change
     function handleChange(e) {
-
     setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     // handle form submit
     async function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true)
-    try {
-    const res = await axios.post(`${baseUrl}/${REGISTER}`, form);
-    setLoading(false);
-    setErr("")
-    const token = res.data.token
-    cookie.set('e-commerce', token)
-    nav("/", { replace: true });
-
-    }
-    catch (err) {
-    setLoading(false)
-    if (err.response.status === 422) {
-    setErr("The email has already been taken")
-    }
-    else {
-    setErr("Internal Server Error");
-    }
-    }
+    register(form);
     }
 
 
     return (
     <>
-    {loading && <LoadingSubmit />}
+    {isRegistering && <LoadingSubmit />}
     <div className="container">
     <div className="row h-100vh">
     <Form className="form" onSubmit={handleSubmit}>
@@ -141,7 +109,7 @@ import GoogleIcon from "../../../Assets/icons8-google.svg";
     <button className="bn54">
     <span className="bn54span">Register</span>
     </button>
-    {err !== "" && (<span className="err">{err}</span>)}
+    {registerError !== null && (<span className="err">{registerError}</span>)}
 
     </div>
     </Form>

@@ -10,9 +10,9 @@ export default function Err403( {role} ) {
             <div className="subtitle">
                 Oops, You don't have permission to access this page.
             </div>
-            <NavLink to={role === "1996" ? "/dashboard/writer/" : "/"} className="btn btn-primary">
+            <NavLink to={role === "1995" ? "/dashboard" : "/"} className="btn btn-primary">
             {
-                role === "1996" ? "Go To Writer's Page" : "Go To Home Page"
+                role === "1995" ? "Go To Dashboard" : "Go To Home Page"
             }
             
             </NavLink>

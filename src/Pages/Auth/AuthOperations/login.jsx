@@ -1,35 +1,21 @@
 import {  useEffect, useRef, useState } from "react";
-import { LOGIN, baseUrl } from "../../../Api/Api";
-import axios from "axios";
 import LoadingSubmit from "../../../Components/Loading/loading";
-import { Link, useNavigate } from "react-router-dom";
-import Cookie from "cookie-universal";
+import { Link } from "react-router-dom";
 import myIcon from "../../../Assets/Login-amico.svg";
 import { Form } from "react-bootstrap";
 import { Google } from "../../../Components/Website/Utils/Google";
+import { useAuth } from './../../../hooks/useAuth';
 
 
     export default function LogIn() {
 
+    const  {login, isLoggingIn, loginError} = useAuth();
 
     // States
     const [form, setForm] = useState({
         email: "",
         password: "",
     });
-
-    // Loading
-    const [loading, setLoading] = useState(false);
-
-    // Err
-    const [err, setErr] = useState("");
-
-    // Navigation
-    const nav = useNavigate();
-
-    // Cookie
-    const cookie = Cookie();
-
     // Ref
     const foc = useRef(null);
 
@@ -45,33 +31,12 @@ import { Google } from "../../../Components/Website/Utils/Google";
     // handle form submit
     async function handleSubmit(e) {
         e.preventDefault();
-        setLoading(true);
-        try {
-        const res = await axios.post(`${baseUrl}/${LOGIN}`, form);
-        setLoading(false);
-        setErr("");
-        const token = res.data.token;
-        const role = res.data.user.role;
-        const go = role === '1995' ? "/dashboard/users/" : (role === '1996' ? "/dashboard/writer/" : "/");
-        cookie.set("e-commerce", token); 
-
-        nav(`${go}`, { replace: true });
-
-    
-        
-        } catch (err) {
-        setLoading(false);
-        if (err.response.status === 401) {
-            setErr("Wrong email or password");
-        } else {
-            setErr("Internal Server Error");
-        }
-        }
+        login(form)
     }
 
     return (
         <>
-        {loading && <LoadingSubmit />}
+        {isLoggingIn && <LoadingSubmit />}
         <div className="container">
             <div className="row ">
             <Form className="form" onSubmit={handleSubmit}>
@@ -117,15 +82,15 @@ import { Google } from "../../../Components/Website/Utils/Google";
                 <button className="bn54">
                 <span className="bn54span">Login</span>
                 </button>
-                {err !== "" && (
+                {loginError !== null && (
                     <>
                     <p className="foot-note">
                         <Link to="/register">Don't have an email?</Link>
                     </p>
-                    <span className="err">{err}</span>
+                    <span className="err">{loginError}</span>
                     </>
                 )}
-                {err === "" && (
+                {loginError === null && (
                     <div className="icon-span">
                     <p className="foot-note">
                         <Link to="/register">Don't have an email?</Link>

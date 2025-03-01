@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useState } from "react";
-import { baseUrl, USER, USERS } from "../../../Api/Api";
+import { baseUrl, USER, USERS } from "../../../Services/Api";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookie from "cookie-universal";

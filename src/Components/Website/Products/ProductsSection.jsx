@@ -4,7 +4,7 @@ import "swiper/css/navigation";
 import ProductCard from "./ProductCard";
 import axios from "axios";
 import useSWR from "swr";
-import { baseUrl } from "../../../Api/Api";
+import { baseUrl } from "../../../Services/Api";
 import ProductSkeleton from "../../Loading/ProductSkeleton";
 import "./product.css"
 import MainSwiper from "../../../helpers/MainSwiper";

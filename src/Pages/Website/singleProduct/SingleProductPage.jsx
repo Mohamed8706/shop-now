@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import { baseUrl, Product } from "../../../Api/Api";
+import { baseUrl, Product } from "../../../Services/Api";
 import SingleProductSekelton from "../../../Components/Loading/SingleProductSkeleton";
 import ProductCounter from "../../../Components/Website/Utils/ProductCounter";
 import { ImageGallery } from './../../../Components/Website/Utils/ImageGallery';

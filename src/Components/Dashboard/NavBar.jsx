@@ -6,7 +6,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import Cookie  from 'cookie-universal';
 
 import axios from "axios";
-import { baseUrl, LOGOUT, USER } from "../../Api/Api";
+import { baseUrl, LOGOUT, USER } from "../../Services/Api";
 import LoadingSubmit from './../Loading/loading';
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../../Redux/Slices/MenuSlice";

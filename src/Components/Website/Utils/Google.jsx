@@ -1,5 +1,5 @@
 import React from "react";
-import { baseUrl } from "../../../Api/Api";
+import { baseUrl } from "../../../Services/Api";
 import  GoogleIcon from "../../../Assets/icons8-google.svg";
 
 export function Google() {
