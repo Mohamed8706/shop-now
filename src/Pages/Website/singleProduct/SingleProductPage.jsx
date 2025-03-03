@@ -1,22 +1,37 @@
 import { useParams } from "react-router-dom"
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import { baseUrl, Product } from "../../../Services/Api";
 import SingleProductSekelton from "../../../Components/Loading/SingleProductSkeleton";
 import ProductCounter from "../../../Components/Website/Utils/ProductCounter";
 import { ImageGallery } from './../../../Components/Website/Utils/ImageGallery';
 import { RatingStars } from './../../../helpers/RatingStars';
 import { useDispatch } from 'react-redux';
 import { addToCart, handlePopUp } from "../../../Redux/Slices/CartSlice";
+import { useProduct } from "../../../hooks/useProduct";
 
 
 export default function SingleProduct() {
     // States
-    const [product, setProduct] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [img, setImg] = useState([]);
     const [qty, setQty] = useState(1);
     const dispatch =  useDispatch()
+
+
+
+
+    // ID
+    const { id } = useParams()
+    
+    const {data: product, isLoading: loading} = useProduct(id); 
+    
+
+
+    // Gallery Images
+    const images = product?.images.map((img) => ({
+        original: "https://ecommerce-backend-production-5ad6.up.railway.app" + img.image,
+        thumbnail: "https://ecommerce-backend-production-5ad6.up.railway.app" + img.image
+    })); 
+
+
     const handleAddToCart = () => {
         if (qty > 0 && product.stock >= qty) {
             dispatch(addToCart({product, qty}))
@@ -24,30 +39,9 @@ export default function SingleProduct() {
         }
     };
 
-    // ID
-    const { id } = useParams()
-
-    // Fetch the Product
-    const fetchProduct = async (url) => {
-        setLoading(true)
-        const {data} = await axios.get(url);
-        setProduct(data[0]);
-        setImg(data[0].images)
-        setLoading(false)
-    }
-
-    useEffect(() => {
-        fetchProduct(`${baseUrl}/${Product}/${id}`)
-    }, [id])
-
-    // Gallery Images
-    const images = useMemo(() => img.map((img) => ({
-        original: "https://ecommerce-backend-production-5ad6.up.railway.app" + img.image,
-        thumbnail: "https://ecommerce-backend-production-5ad6.up.railway.app" + img.image
-    })), [img]); 
 
 
-    const totalPrice = qty * product.price;
+    const totalPrice = qty * product?.price;
     if (loading) return <SingleProductSekelton />;
     return (
         <div className="py-16 px-3">

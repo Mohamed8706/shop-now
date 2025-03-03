@@ -39,7 +39,18 @@ api.interceptors.request.use((config) => {
     return config;
 }, (error) => Promise.reject(error));
 
+const fetchFromApi = async (endpoint) => {
+    try {
+        const { data } = await api.get(`/${endpoint}`);
+        return data;
+    } catch (error) {
+        const message = error.response?.data?.message || "Failed To fetch data";
+        throw new Error(message);
+    }
+}
 
+
+// USERS
 export const logIn = async (credentials) => {
     try {
         const { data } = await api.post(`/${LOGIN}`, credentials);
@@ -70,17 +81,28 @@ export const logOut = async () => {
         const cookie = Cookie();
         cookie.remove("e-commerce");
     } catch (error) {
-        handleError(error);
+        const message = error.response?.data?.message;
+        throw new Error(message);
     }
 };
 
+export const fetchUser = () => fetchFromApi(USER)
 
+// CATEGORIES
+export const fetchCategories = () => fetchFromApi(CAT)
 
-export const fetchUser = async () => {
+// PRODUCTS
+export const latestSale = () => fetchFromApi(LatestSale);
+export const latestProducts = () => fetchFromApi(LatestProducts);
+export const topProducts = () => fetchFromApi(TopProducts);
+
+export const fetchProductById = async (id) => {
+    if (!id) throw new Error("Product ID is required");
+
     try {
-        const { data } = await api.get(`/${USER}`);
-        return data;
+        const { data } = await api.get(`/${Product}/${id}`);
+        return data[0];
     } catch (error) {
-        handleError(error);
+        throw new Error(error.response?.data?.message || "Failed to fetch product");
     }
 };

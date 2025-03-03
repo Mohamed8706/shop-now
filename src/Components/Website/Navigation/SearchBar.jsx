@@ -1,32 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DropdownButton, FormControl } from "react-bootstrap";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import LoadingSubmit from "../../Loading/loading";
-import { baseUrl, CAT } from "../../../Services/Api";
-import axios from "axios";
 import { Link } from "react-router-dom";
+import { useCategories } from "../../../hooks/useCategories";
 
 export function SearchBar() {
-  const [loading, setLoading] = useState(false);
-  const [cat, setCat] = useState([]);
-
-  // Fetch and render Categories
-  const fetchCategories = async (url) => {
-    setLoading(true);
-    const { data } = await axios.get(url);
-    setCat(data);
-    setLoading(false);
-    return data;
-  };
-
-  useEffect(() => {
-    fetchCategories(`${baseUrl}/${CAT}`);
-  }, []);
-
+  const {data, isLoading } = useCategories();
   return (
     <>
-      {loading && <LoadingSubmit />}
+      {isLoading && <LoadingSubmit />}
       <FormControl
         style={{ borderRadius: "100px" }}
         type="search"
@@ -50,7 +34,7 @@ export function SearchBar() {
           title="All"
           className="font-bold text-lg text-[#333333]"
         >
-          {cat.map((cat, ind) => (
+          {data?.map((cat, ind) => (
             <div key={ind}>
               <Link to="/dashboard" className="">
                 {cat.title.split(" ")[0]}
