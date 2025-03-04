@@ -1,6 +1,5 @@
 import { useParams } from "react-router-dom"
-import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import SingleProductSekelton from "../../../Components/Loading/SingleProductSkeleton";
 import ProductCounter from "../../../Components/Website/Utils/ProductCounter";
 import { ImageGallery } from './../../../Components/Website/Utils/ImageGallery';
@@ -21,10 +20,8 @@ export default function SingleProduct() {
     // ID
     const { id } = useParams()
     
-    const {data: product, isLoading: loading} = useProduct(id); 
+    const {data: product, isFetching} = useProduct(id); 
     
-
-
     // Gallery Images
     const images = product?.images.map((img) => ({
         original: "https://ecommerce-backend-production-5ad6.up.railway.app" + img.image,
@@ -42,7 +39,7 @@ export default function SingleProduct() {
 
 
     const totalPrice = qty * product?.price;
-    if (loading) return <SingleProductSekelton />;
+    if (isFetching) return <SingleProductSekelton />;
     return (
         <div className="py-16 px-3">
             <div className="w-full flex gap-10 lg:gap-32 flex-wrap">
