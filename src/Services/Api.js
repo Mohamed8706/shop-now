@@ -87,7 +87,7 @@ export const logOut = async () => {
 };
 
 export const fetchUser = () => fetchFromApi(USER)
-
+export const fetchUsers = (page, limit) => fetchFromApi(`${USERS}?limit=${limit}&page=${page}`);
 // CATEGORIES
 export const fetchCategories = () => fetchFromApi(CAT)
 

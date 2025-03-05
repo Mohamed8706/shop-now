@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React from "react";
 import { DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { faBars } from '@fortawesome/free-solid-svg-icons';
@@ -7,13 +7,11 @@ import LoadingSubmit from './../Loading/loading';
 import { useDispatch } from "react-redux";
 import { toggleMenu } from "../../Redux/Slices/MenuSlice";
 import { useAuth } from "../../hooks/useAuth";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function NavigationBar() {
     const dispatch = useDispatch();
     const {logout, isLoggingOut} = useAuth();
-    const queryClient = useQueryClient();
-    const user = queryClient.getQueryData(["user"]);
+    const {user} = useAuth()
     const name = user.name;
     
     if (isLoggingOut) return <LoadingSubmit />

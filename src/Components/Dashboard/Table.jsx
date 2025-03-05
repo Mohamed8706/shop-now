@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { FormControl, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { baseUrl } from "../../Services/Api";
 import Cookie from "cookie-universal";
 import TableLoading from "./../Loading/tableLoading";
 import PaginatedItems from "./Pagination/Pagination";
 import { useEffect, useState } from "react";
 import TransformDate from "../../helpers/TransformDate";
+import { baseUrl } from "../../services/api";
 
 export default function TableShow(props) {
     const {
@@ -18,9 +18,7 @@ export default function TableShow(props) {
         page,
         setLimit,
         setPage,
-        mutate,
         loading,
-        setLoading,
         title,
     } = props;
     const currentUser = props.currentUser || {
@@ -54,7 +52,7 @@ export default function TableShow(props) {
                         Authorization: "Bearer " + token,
                     },
                 })
-                .then(() => mutate());
+
         } catch (err) {
             console.log(err);
         }
@@ -62,7 +60,6 @@ export default function TableShow(props) {
 
     // Handle search
     async function getSearchedData() {
-        setLoading(true);
         try {
             const res = await axios.post(
                 `${baseUrl}/${title}/search`,
@@ -74,7 +71,6 @@ export default function TableShow(props) {
                 }
             );
             setSearchedData(res.data);
-            setLoading(false);
         } catch (error) {
             console.log(error);
         }
@@ -224,6 +220,7 @@ export default function TableShow(props) {
                         data={data}
                         limit={limit}
                         setPage={setPage}
+                        page={page}
                     />
                 </div>
             </div>

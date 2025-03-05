@@ -2,14 +2,16 @@ import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import { DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from './../../../hooks/useAuth';
-import { useQueryClient } from "@tanstack/react-query";
+
 import { NavLink } from "react-router-dom";
+import  Cookie  from 'cookie-universal';
 
 
 export function UserIcon() {
+    const cookies = Cookie();
+    const token = cookies.get("e-commerce");
     const {logout} = useAuth();
-    const queryClient = useQueryClient();
-    const user = queryClient.getQueryData(["user"]);
+    const {user} = useAuth();
     return (
         <DropdownButton
             id="dropdown-basic-button"
@@ -22,7 +24,7 @@ export function UserIcon() {
                 />
             }
         >
-            {user ? (
+            {token ? (
                 <>
                     <NavLink to="/" className={"d-flex align-items-center gap-2 m-2"}>
                         Home

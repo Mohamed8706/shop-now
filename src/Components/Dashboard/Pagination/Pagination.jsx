@@ -1,11 +1,19 @@
 import ReactPaginate from "react-paginate";
 import "./Paginated.css"
+import { useEffect } from "react";
 
 
 
-export default function PaginatedItems({ searchLength, searchedData, data, setPage, limit }) {
+export default function PaginatedItems({ searchLength, searchedData, data, setPage, limit, page }) {
   const pageCount = searchLength > 0 ? 
   +Math.ceil(searchedData.length / limit): +Math.ceil(data?.total / data?.per_page)  ;
+
+  // Reset to page 1 if the current page is greater than available pages
+  useEffect(() => {
+    if (page > pageCount) {
+      setPage(1);
+    }
+  }, [pageCount, page, setPage]);
 
   return (
     <>

@@ -27,49 +27,49 @@ const Dashboard = lazy(() => import('./Pages/Dashboard/Dashboard'));
 
 
 
-
 export default function App() {
+useAuth();
 
-    return (
-        <div className="app">
-            <Routes>
-                {/* Public Routes */}
-                <Route element={<Website />}>
-                    <Route path="/" element={<HomePage />}></Route>
-                    <Route path="/product/:id" element={<SingleProduct />}></Route>
-                </Route>
+return (
+    <div className="app">
+        <Routes>
+            {/* Public Routes */}
+            <Route element={<Website />}>
+                <Route path="/" element={<HomePage />}></Route>
+                <Route path="/product/:id" element={<SingleProduct />}></Route>
+            </Route>
 
-                <Route path="/auth/google/callback" element={<GoogleCallBack />}></Route>
-                <Route path="/*" element={<Err404 />}></Route>
-
-
-                <Route element={<RequireBack />}>
-                    <Route path="/login" element={<LogIn />}></Route>
-                    <Route path="/register" element={<Register />}></Route>
-                </Route>
+            <Route path="/auth/google/callback" element={<GoogleCallBack />}></Route>
+            <Route path="/*" element={<Err404 />}></Route>
 
 
-                {/* Protected Routes */}
-                <Route element={<RequireAuth allowedRole={["1995", "1999"]} />}>
-                    <Route path="/dashboard/" 
-                    element={<Suspense fallback={<LoadingSubmit />}><Dashboard /></Suspense>}>
-                        {/* Users */}
-                        <Route element={<RequireAuth allowedRole={["1995"]} />}>
-                            <Route path="users" element={<Users />} />
-                            <Route path="users/:id" element={<UserUpdate />} />
-                            <Route path="user/add" element={<AddUser />} />
-                        </Route>
-                        {/* Categories */}
-                        <Route path="categories" element={<Categories />} />
-                        <Route path="category/add" element={<AddCategory />} />
-                        <Route path="categories/:id" element={<CategoryUpdate />} />
-                        {/* Products */}
-                        <Route path="products" element={<ProductsPage />} />
-                        <Route path="product/add" element={<AddProduct />} />
-                        <Route path="products/:id" element={<ProductUpdate />} />
+            <Route element={<RequireBack />}>
+                <Route path="/login" element={<LogIn />}></Route>
+                <Route path="/register" element={<Register />}></Route>
+            </Route>
+
+
+            {/* Protected Routes */}
+            <Route element={<RequireAuth allowedRole={["1995", "1999"]} />}>
+                <Route path="/dashboard/" 
+                element={<Suspense fallback={<LoadingSubmit />}><Dashboard /></Suspense>}>
+                    {/* Users */}
+                    <Route element={<RequireAuth allowedRole={["1995"]} />}>
+                        <Route path="users" element={<Users />} />
+                        <Route path="users/:id" element={<UserUpdate />} />
+                        <Route path="user/add" element={<AddUser />} />
                     </Route>
+                    {/* Categories */}
+                    <Route path="categories" element={<Categories />} />
+                    <Route path="category/add" element={<AddCategory />} />
+                    <Route path="categories/:id" element={<CategoryUpdate />} />
+                    {/* Products */}
+                    <Route path="products" element={<ProductsPage />} />
+                    <Route path="product/add" element={<AddProduct />} />
+                    <Route path="products/:id" element={<ProductUpdate />} />
                 </Route>
-            </Routes>
-        </div>
-    );
+            </Route>
+        </Routes>
+    </div>
+);
 }

@@ -1,33 +1,36 @@
-import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
-import { fetchUser, logIn, logOut, register } from "../services/api";
+import {useMutation, useQuery} from "@tanstack/react-query";
+import { fetchUser, fetchUsers, logIn, logOut, register } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Cookie from "cookie-universal";
 
-export const useAuth = () => {
-    const queryClient = useQueryClient();
+
+export const useAuth = (page = 0, limit = 0) => {
     const nav = useNavigate();
 
     const cookies = Cookie();
     const token = cookies.get("e-commerce"); 
 
     // Fetch user on load & cache it
-    useQuery({
+    const UserData = useQuery({
         queryKey: ["user"],
         queryFn: fetchUser,
         enabled: !!token, 
         staleTime: 1000 * 60 * 5,
-        onSuccess: (userData) => {
-            queryClient.setQueryData(["user"], userData);
-        },
-        onError: () => {
-            queryClient.removeQueries(["user"]);
-        },
     });
 
+    // Fetch paginated users and keep the old data stored 
+    const Users = useQuery({
+        queryKey: ["users", page, limit], 
+        queryFn: () => fetchUsers(page, limit),
+        staleTime: 1000 * 60 * 5,
+        enabled: true,
+        keepPreviousData: true,
+
+    })
+    
     const loginMutation = useMutation({
         mutationFn: logIn,
         onSuccess: (userData) => {
-            queryClient.setQueryData(["user"], userData);
             const go = userData.role === "1995" ? "/dashboard" : "/";
             nav(go, {replace: true}); 
         },
@@ -35,7 +38,6 @@ export const useAuth = () => {
     const rgeisterMutation = useMutation({
         mutationFn: register,
         onSuccess: (userData) => {
-            queryClient.setQueryData(["user"], userData);
             const go = userData.role === "1995" ? "/dashboard" : "/";
             nav(go, {replace: true}); 
         },
@@ -43,8 +45,6 @@ export const useAuth = () => {
     const logoutMutation = useMutation({
         mutationFn: logOut,
         onSuccess: () => {
-        queryClient.removeQueries(["user"]);  
-        queryClient.invalidateQueries(["user"]); 
         nav("/", {replace: true}); 
 
         },
@@ -52,6 +52,10 @@ export const useAuth = () => {
 
 
     return {
+        user: UserData.data,
+        isFetchingUser: UserData.isLoading,
+        users: Users.data,
+        isFetchingUsers: Users.isLoading,
         login: loginMutation.mutate, 
         isLoggingIn: loginMutation.isPending,
         loginError: loginMutation.error?.message || null,

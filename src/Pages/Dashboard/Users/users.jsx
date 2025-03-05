@@ -1,56 +1,19 @@
-import { useEffect } from "react";
 import { useState } from "react";
-import { baseUrl, USER, USERS } from "../../../Services/Api";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import Cookie from "cookie-universal";
 import TableShow from "../../../Components/Dashboard/Table";
-import useSWR from "swr";
+import { useAuth } from "../../../hooks/useAuth";
+import { USER } from "../../../services/api";
 
 export default function Users() {
     // States
-    const [users, setUsers] = useState([]);
-    const [currentUser, setCurrentUser] = useState("");
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(1);
-    const [loading, setLoading] = useState(false);
 
-    // Cookies
-    const cookie = Cookie();
-    const token = cookie.get("e-commerce");
+    // Enable user fetching only when this component is loaded
+    const { users, isFetchingUsers: loading } = useAuth(page,limit);
 
-    // Get Current User
-    useEffect(() => {
-        axios
-        .get(`${baseUrl}/${USER}`, {
-            headers: {
-            Authorization: "Bearer " + token,
-            },
-        })
-        .then((res) => setCurrentUser(res.data));
-    }, []);
-
-    // Fetcher function for SWR
-    const fetchUsers = async (url) => {
-        setLoading(true);
-        const { data } = await axios.get(url, {
-        headers: { Authorization: `Bearer ${token}` },
-        });
-        setUsers(data);
-        setLoading(false);
-
-        return data;
-    };
-
-    // Use SWR with dynamic key
-    const { mutate } = useSWR(
-        `${baseUrl}/${USERS}?limit=${limit}&page=${page}`,
-        fetchUsers,
-        {
-        revalidateOnFocus: false,
-        }
-    );
-
+    const {user: currentUser} = useAuth();
+    console.log(users)
     // Passing Headers
     const header = [
         {
@@ -91,7 +54,6 @@ export default function Users() {
             <TableShow
             header={header}
             data={users}
-            mutate={mutate}
             title={USER}
             currentUser={currentUser}
             page={page}
@@ -99,9 +61,6 @@ export default function Users() {
             setPage={setPage}
             setLimit={setLimit}
             loading={loading}
-            setLoading={setLoading}
-
-        
             />
         </div>
         </div>
