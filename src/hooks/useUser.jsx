@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { fetchSelectedUser, UpdateUser } from "../services/api";
 import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router-dom";
+import { AddUser } from "../services/api";
 
 export const useUser = (id) => {
     const nav = useNavigate();
@@ -20,13 +21,14 @@ export const useUser = (id) => {
             SelectedUser.refetch()
             nav("/dashboard/users");
         },
-
-
     });
+
+
+
     return {
         selectedUser: SelectedUser.data,
         isFetchingSelectedUser: SelectedUser.isLoading,
         update: updateSelectedUser.mutate,
-        isUpdating: updateSelectedUser.isPending
+        isUpdating: updateSelectedUser.isPending,
     }
 }

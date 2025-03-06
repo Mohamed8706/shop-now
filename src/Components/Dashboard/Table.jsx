@@ -36,6 +36,7 @@ export default function TableShow(props) {
     const filterdByDate = data?.data?.filter(
         (item) => date ? TransformDate(item.created_at) == date : item
     );
+    
     const filterdData = search.length > 0 ? filterdByName : filterdByDate;
 
 

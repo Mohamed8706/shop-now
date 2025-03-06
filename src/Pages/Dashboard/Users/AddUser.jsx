@@ -1,11 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { ADD, REGISTER, USER, baseUrl } from "../../../Services/Api";
-import axios from "axios";
 import LoadingSubmit from '../../../Components/Loading/loading';
-import { useNavigate } from "react-router-dom";
-import Cookie from 'cookie-universal';
 import { Form } from "react-bootstrap";
 import  GoogleIcon  from "../../../Assets/icons8-google.svg";
+import { useAuth } from "../../../hooks/useAuth";
+
 
 
 
@@ -18,13 +16,7 @@ export default function AddUser() {
         role:""
     });
 
-
-    // Loading
-    const [loading, setLoading] = useState(false);
-
-
-    // Err
-    const [err, setErr] = useState("");
+    const {add, isAdding, addingError} = useAuth();
 
     // Ref
     const focus = useRef("");
@@ -34,51 +26,28 @@ export default function AddUser() {
         focus.current.focus();
     }, [])
 
-    // Navigate
-    const nav = useNavigate();
 
 
-    // Cookie
-    const cookie = Cookie();
-    const token = cookie.get("e-commerce");
+
 
     // handle form change
     function handleChange(e) {
-
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
     // handle form submit
     async function handleSubmit(e) {
         e.preventDefault();
-        setLoading(true)
-        try {
-            const res = await axios.post(`${baseUrl}/${USER}/${ADD}`, form, {
-            headers: {
-                Authorization: "Bearer " + token,
-            }
-            });
-            setLoading(false);
-            setErr("")
-            
-            nav("/dashboard/users/", { replace: true });
-
-        }
-        catch (err) {
-            setLoading(false)
-            if (err.response.status === 422) {
-                setErr("The email has already been taken")
-            }
-            else {
-                setErr("Internal Server Error");
-            }
-        }
+        add(form)
     }
 
 
+    if (isAdding) {
+        return <LoadingSubmit />;
+    }
+
     return (
         <>
-            {loading && <LoadingSubmit />}
                 <div className="row " style={{margin:"15px", height:"70vh"}}>
                     <Form className="form" onSubmit={handleSubmit} style={{padding: "10px"}}>
                         <div className="custom-form">
@@ -171,7 +140,7 @@ export default function AddUser() {
                                             form.role !== "" ? false : true} className="bn54">
                                 <span className="bn54span">Register</span>
                             </button>
-                            {err !== "" && (<span className="err">{err}</span>)}
+                            {addingError && (<span className="err">{addingError.message}</span>)}
 
                         </div>
                     </Form>

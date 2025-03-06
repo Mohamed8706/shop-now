@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from "@tanstack/react-query";
-import { fetchUser, fetchUsers, logIn, logOut, register } from "../services/api";
+import { AddUser, fetchUser, fetchUsers, logIn, logOut, register } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import Cookie from "cookie-universal";
 
@@ -9,7 +9,6 @@ export const useAuth = (page = 0, limit = 0) => {
 
     const cookies = Cookie();
     const token = cookies.get("e-commerce"); 
-
 
 
     // Fetch user on load & cache it
@@ -50,7 +49,13 @@ export const useAuth = (page = 0, limit = 0) => {
         },
     });
 
-
+    const addUser = useMutation({
+        mutationFn: AddUser,
+        onSuccess: () => {
+            Users.refetch();
+            nav("/dashboard/users");
+        }
+    });
     return {
         user: UserData.data,
         isFetchingUser: UserData.isLoading,
@@ -64,5 +69,9 @@ export const useAuth = (page = 0, limit = 0) => {
         registerError: rgeisterMutation.error?.message || null,
         logout: logoutMutation.mutate,
         isLoggingOut: logoutMutation.isPending,
+        logoutError: logoutMutation.error?.message || null,
+        add: addUser.mutate,
+        isAdding: addUser.isPending,
+        addError: addUser.error?.message || null
     };
 }

@@ -85,6 +85,7 @@ export const logOut = async () => {
         throw new Error(message);
     }
 };
+
 export const UpdateUser = async (id, form) => {
     try {
         await api.post(`${baseUrl}/${USER}/edit/${id}`, form
@@ -93,10 +94,21 @@ export const UpdateUser = async (id, form) => {
         throw new Error(message);
         }
 }
+export const AddUser = async (form) => {
+    console.log(form)
+    try {
+        await api.post(`${baseUrl}/${USER}/${ADD}`, form
+    )} catch (err) {
+        const message = err.response?.data?.message;
+        console.log(err.response.data);
+        throw new Error(message);
+    }
+}
 
 export const fetchUser = () => fetchFromApi(USER)
 export const fetchUsers = (page, limit) => fetchFromApi(`${USERS}?limit=${limit}&page=${page}`);
 export const fetchSelectedUser = (id) => fetchFromApi(`${USER}/${id}`);
+
 // CATEGORIES
 export const fetchCategories = () => fetchFromApi(CAT)
 
