@@ -1,31 +1,39 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import axios from "axios";
-import { baseUrl, USER } from "../../../Services/Api";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingSubmit from '../../../Components/Loading/loading';
 import  Cookie  from 'cookie-universal';
+import { baseUrl, USER } from "../../../services/api";
+import { useUser } from "../../../hooks/useUser";
 
 
 
 export default function UserUpdate() {
-    const [form, setForm] = useState({
-        name: "",
-        email: "",
-        role: ""
-    })  
-
-    const { id } = useParams()
-    const nav = useNavigate("");
-
-    const [disable, setDisable] = useState(true);
-
-    const [loading, setLoading] = useState(false);
-
-
-        // Cookies
+    const { id } = useParams();
+    const nav = useNavigate();
     const cookie = Cookie();
-    const token = cookie.get("e-commerce")
+    const token = cookie.get("e-commerce");
+    
+        // State for form inputs
+        const [form, setForm] = useState({
+            name: "",
+            email: "",
+            role: "",
+        });
+
+    // Fetch selected user
+    const { selectedUser, isFetchingSelectedUser, update, isUpdating } = useUser(id);
+
+    useEffect(() => {
+        if (selectedUser) {
+            setForm({
+                name: selectedUser.name || "",
+                email: selectedUser.email || "",
+                role: selectedUser.role || "",
+            });
+        }
+    }, [selectedUser]);
 
 // Animations for the label
 const sections = document.querySelectorAll("#mySelect");
@@ -49,44 +57,19 @@ sections.forEach((el) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
     
-    // Get user details to fill up inputs
-    useEffect(() => {
-        setLoading(true)
-        axios.get(`${baseUrl}/${USER}/${id}`, {
-            headers:{
-            Authorization: "Bearer " + token,
-            }
-        })
-        .then((data) => { 
-            setForm({ ...form, name : data.data.name, email : data.data.email, role: data.data.role});})
-        .then(() => setLoading(false))
-        .then(() => setDisable(false))
-        .catch(() => nav('/dashboard/user/page/404', {replace: true}))
-    }, [])
 
     async function handleUpdate(e) {
-        setLoading(true)
         e.preventDefault();
-        try {
-        const res = await axios.post(`${baseUrl}/${USER}/edit/${id}`, form, {
-        headers: {
-            Authorization: "Bearer " + token,
-            },
-        });
-        nav("/dashboard/users")
-        setLoading(false)
-        
-        } catch (err){
-            console.log(err);
-        }      
+        update({ id, form });
     }
 
-            
+    if (isFetchingSelectedUser || isUpdating) {
+        return <LoadingSubmit />;
+    }
 
 
     return( 
         <>
-        {loading && <LoadingSubmit />}
         <div className="row " style={{margin:"25px", height:"70vh"}}>
         <Form className="form" style={{height:"100%", padding: "30px"}} onSubmit={handleUpdate}>
         <Form.Group
@@ -142,7 +125,7 @@ sections.forEach((el) => {
             <Form.Label>Roles</Form.Label>
         </Form.Group>
         
-        <button disabled={disable} className="bn54">
+        <button disabled={isFetchingSelectedUser} className="bn54">
             <span className="bn54span">Update</span>
         </button>
 

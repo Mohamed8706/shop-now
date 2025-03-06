@@ -85,9 +85,18 @@ export const logOut = async () => {
         throw new Error(message);
     }
 };
+export const UpdateUser = async (id, form) => {
+    try {
+        await api.post(`${baseUrl}/${USER}/edit/${id}`, form
+    )} catch (err) {
+        const message = err.response?.data?.message;
+        throw new Error(message);
+        }
+}
 
 export const fetchUser = () => fetchFromApi(USER)
 export const fetchUsers = (page, limit) => fetchFromApi(`${USERS}?limit=${limit}&page=${page}`);
+export const fetchSelectedUser = (id) => fetchFromApi(`${USER}/${id}`);
 // CATEGORIES
 export const fetchCategories = () => fetchFromApi(CAT)
 
