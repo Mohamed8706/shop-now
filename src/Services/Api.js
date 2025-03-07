@@ -95,7 +95,6 @@ export const UpdateUser = async (id, form) => {
         }
 }
 export const AddUser = async (form) => {
-    console.log(form)
     try {
         await api.post(`${baseUrl}/${USER}/${ADD}`, form
     )} catch (err) {
@@ -111,7 +110,25 @@ export const fetchSelectedUser = (id) => fetchFromApi(`${USER}/${id}`);
 
 // CATEGORIES
 export const fetchCategories = () => fetchFromApi(CAT)
-
+export const fetchPaginatedCateories = (page, limit) => fetchFromApi(`${CAT}?limit=${limit}&page=${page}`);
+export const fetchSelectedCategory = (id) => fetchFromApi(`${Cat}/${id}`);
+export const UpdateCategory = async (id, form) => {
+    try {
+        await api.post(`${baseUrl}/${Cat}/edit/${id}`, form
+        )
+    } catch (err) {
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+}
+export const AddCategory = async (form) => {
+    try {
+        await api.post(`${baseUrl}/${Cat}/${ADD}`, form)
+    } catch (err) {
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+}
 // PRODUCTS
 export const latestSale = () => fetchFromApi(LatestSale);
 export const latestProducts = () => fetchFromApi(LatestProducts);

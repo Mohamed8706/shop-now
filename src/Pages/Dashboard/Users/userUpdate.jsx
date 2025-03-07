@@ -4,23 +4,20 @@ import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import LoadingSubmit from '../../../Components/Loading/loading';
 import  Cookie  from 'cookie-universal';
-import { baseUrl, USER } from "../../../services/api";
+import { baseUrl, USER } from "../../../Services/Api";
 import { useUser } from "../../../hooks/useUser";
 
 
 
 export default function UserUpdate() {
-    const { id } = useParams();
-    const nav = useNavigate();
-    const cookie = Cookie();
-    const token = cookie.get("e-commerce");
-    
-        // State for form inputs
-        const [form, setForm] = useState({
+    // State for form inputs
+    const [form, setForm] = useState({
             name: "",
             email: "",
             role: "",
         });
+        
+    const { id } = useParams();
 
     // Fetch selected user
     const { selectedUser, isFetchingSelectedUser, update, isUpdating } = useUser(id);
@@ -37,7 +34,6 @@ export default function UserUpdate() {
 
 // Animations for the label
 const sections = document.querySelectorAll("#mySelect");
-
 const observer = new IntersectionObserver((enteries) => {
     enteries.forEach((entry) => {
         if (entry.isIntersecting) {

@@ -1,5 +1,5 @@
 import {useMutation, useQuery} from "@tanstack/react-query";
-import { AddUser, fetchUser, fetchUsers, logIn, logOut, register } from "../services/api";
+import { AddUser, fetchUser, fetchUsers, logIn, logOut, register } from "../Services/Api";
 import { useNavigate } from "react-router-dom";
 import Cookie from "cookie-universal";
 

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import { useCategories } from "../../../hooks/useCategories";
 
 export function SearchBar() {
-  const {data, isLoading } = useCategories();
+  const {allCategories: data, isAllLoading: isLoading } = useCategories();
   return (
     <>
       {isLoading && <LoadingSubmit />}

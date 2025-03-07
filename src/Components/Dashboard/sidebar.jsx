@@ -2,18 +2,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { WindowSize } from "../../context/windowresize";
-
-import { useState } from "react";
-import { useQueryClient } from "@tanstack/react-query";
 import { links } from "./links";
 import { useSelector } from "react-redux";
+import { useAuth } from "../../hooks/useAuth";
 
 export const SideBar = memo(function SideBar() {
     const isOpen = useSelector((state) => state.menu.isOpen);
     const resizeWidth = useContext(WindowSize);
-    const queryClient = useQueryClient();
-    const user = queryClient.getQueryData(["user"]);
 
+    const {user} = useAuth();
 
 
     return (

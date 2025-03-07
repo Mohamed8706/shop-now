@@ -7,29 +7,30 @@ import LoadingSubmit from '../../../Components/Loading/loading';
 import  Cookie  from 'cookie-universal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { useCategory } from "../../../hooks/useCategory";
 
 
 
 export default function CategoryUpdate() {
-const [title, setTitle] = useState("");
-const [image, setImage] = useState("");
+const { id }  = useParams();
+const {selectedCategory: category, isFetchingSelectedCategory: loading, update, isUpdating } = useCategory(id);
 
+const [form, setForm] = useState({
+    title: "",
+    image: "",
+});
 
-    const { id }  = useParams();
-    const nav = useNavigate("");
+    console.log(form.image)
 
-    const [disable, setDisable] = useState(true);
+useEffect(() => {
+    if (category) {
+        setForm({ ...form, title: category.title});
+    }
+}, [category])
 
-    const [loading, setLoading] = useState(false);
-
-
-        // Cookies
-    const cookie = Cookie();
-    const token = cookie.get("e-commerce")
 
 // Animations for the label
 const sections = document.querySelectorAll("#mySelect");
-
 const observer = new IntersectionObserver((enteries) => {
     enteries.forEach((entry) => {
         if (entry.isIntersecting) {
@@ -46,47 +47,20 @@ sections.forEach((el) => {
 
 
 
-    
-    // Get user details to fill up inputs
-    useEffect(() => {
-        setLoading(true)
-        axios.get(`${baseUrl}/${Cat}/${id}`, {
-            headers:{
-            Authorization: "Bearer " + token,
-            }
-        })
-        .then((data) => {setTitle(data.data.title)})
-        .then(() => setLoading(false))
-        .then(() => setDisable(false))
-        .catch((err) => console.log(err))
-    }, [])
+
 
     async function handleUpdate(e) {
-        setLoading(true)
         e.preventDefault();
-        const form = new FormData();
-        form.append("title", title);
-        form.append("image", image);
-        try {
-        const res = await axios.post(`${baseUrl}/${Cat}/edit/${id}`, form, {
-        headers: {
-            Authorization: "Bearer " + token,
-            },
-        });
-        nav("/dashboard/categories")
-        setLoading(false)
-        
-        } catch (err){
-            console.log(err);
-        }      
+        update({id, form});     
     }
 
             
-
+    if (loading || isUpdating) {
+        return <LoadingSubmit />;
+    }
 
     return( 
         <>
-        {loading && <LoadingSubmit />}
         <div className="row " style={{margin:"25px", height:"70vh"}}>
         <Form className="form" style={{height:"100%", padding: "30px"}} onSubmit={handleUpdate}>
         <Form.Group
@@ -99,8 +73,8 @@ sections.forEach((el) => {
                 type="text"
                 placeholder="Title"
                 name="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
+                value={form.title}
+                onChange={(e) => setForm({ ...form, title: e.target.value })}
                 required
             />
             <Form.Label>Title</Form.Label>
@@ -118,7 +92,7 @@ sections.forEach((el) => {
             <Form.Control
                 type="file"
                 name="image"
-                onChange={(e) => setImage(e.target.files.item(0))}
+                onChange={(e) => setForm({ ...form, image: e.target.files.item(0) })}
                 required
             />
             <Form.Label>Image</Form.Label>
@@ -128,7 +102,7 @@ sections.forEach((el) => {
 
     
         
-        <button className="bn54">
+        <button className="bn54" disabled={loading}>
             <span className="bn54span">Update</span>
         </button>
 

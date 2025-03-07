@@ -7,24 +7,22 @@ import Cookie from 'cookie-universal';
 import { Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
+import { useCategories } from "../../../hooks/useCategories";
 
 
 export default function AddCategory() {
 // States
-const [title, setTitle] = useState("");
-const [image, setImage] = useState("");
+const [form, setForm] = useState({
+    title: "",
+    image: "",
+});
 
-const form = new FormData();
-form.append("title", title);
-form.append("image", image);
+let page = 1;
+let limit = 1;
+console.log(form.image)
 
+const {addCategory, isAdding: loading, error: err} = useCategories(page, limit);
 
-// Loading
-const [loading, setLoading] = useState(false);
-
-
-// Err
-const [err, setErr] = useState("");
 
 // Ref
 const focus = useRef("");
@@ -34,49 +32,20 @@ useEffect(() => {
     focus.current.focus();
 }, [])
 
-// Navigate
-const nav = useNavigate();
 
 
-// Cookie
-const cookie = Cookie();
-const token = cookie.get("e-commerce");
-
-// handle form change
 
 
 // handle form submit
 async function handleSubmit(e) {
     e.preventDefault();
-    setLoading(true)
-    try {
-        const res = await axios.post(`${baseUrl}/${Cat}/${ADD}`, form, {
-        headers: {
-            Authorization: "Bearer " + token,
-        },
-        });
-        setLoading(false);
-        setErr("")
-        
-        nav("/dashboard/categories/", { replace: true });
-
-    }
-    catch (err) {
-        setLoading(false)
-        if (err.response.status === 422) {
-            setErr("The email has already been taken")
-        }
-        else {
-            setErr("Internal Server Error");
-        }
-    }
+    addCategory(form)
 }
-console.log(form)
 
+if (loading) return <LoadingSubmit />
 
 return (
     <>
-        {loading && <LoadingSubmit />}
             <div className="row " style={{margin:"15px", height:"70vh"}}>
                 <Form className="form" onSubmit={handleSubmit} style={{padding: "10px"}}>
                     <div className="custom-form">
@@ -90,8 +59,8 @@ return (
                                 type="text"
                                 placeholder="Title..."
                                 name="title"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                                value={form.title}
+                                onChange={(e) => setForm({ ...form, title: e.target.value })}
                                 required
                                 ref={focus}
                             />
@@ -109,8 +78,7 @@ return (
                             <Form.Control
                                 type="file"
                                 name="image"
-                                
-                                onChange={(e) => setImage(e.target.files.item(0))}
+                                onChange={(e) => setForm({ ...form, image: e.target.files.item(0) })}
                                 required
                             />
                             <Form.Label>Image</Form.Label>
@@ -119,10 +87,11 @@ return (
 
 
 
-                        <button disabled={title.length > 1 ? false : true} className="bn54">
+                        <button disabled={form.title.length > 1 ? false : true} className="bn54">
                             <span className="bn54span">Add Cateogry</span>
                         </button>
-                        {err !== "" && (<span className="err">{err}</span>)}
+                        {err && <span className="err">{err.message || "Something went wrong"}</span>}
+
 
                     </div>
                 </Form>

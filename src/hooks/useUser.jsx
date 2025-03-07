@@ -1,8 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { fetchSelectedUser, UpdateUser } from "../services/api";
-import { useAuth } from "./useAuth";
+import { fetchSelectedUser, UpdateUser } from "../Services/Api";
 import { useNavigate } from "react-router-dom";
-import { AddUser } from "../services/api";
 
 export const useUser = (id) => {
     const nav = useNavigate();
@@ -18,7 +16,6 @@ export const useUser = (id) => {
     const updateSelectedUser = useMutation({
         mutationFn:  ({ id, form }) => UpdateUser(id, form),
         onSuccess: () => { 
-            SelectedUser.refetch()
             nav("/dashboard/users");
         },
     });
