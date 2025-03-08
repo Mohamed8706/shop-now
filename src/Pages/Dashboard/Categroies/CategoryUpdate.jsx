@@ -20,7 +20,6 @@ const [form, setForm] = useState({
     image: "",
 });
 
-    console.log(form.image)
 
 useEffect(() => {
     if (category) {

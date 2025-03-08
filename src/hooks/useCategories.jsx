@@ -10,26 +10,17 @@ export const useCategories = (page = 0, limit = 0) => {
     const paginatedCategories = useQuery({
         queryKey: ["categories", page, limit],
         queryFn: () => fetchPaginatedCateories(page, limit),
-        staleTime: 1000 * 60 * 2,
+        staleTime: 1000 * 30,
         enabled: page > 0 && limit > 0,
         keepPreviousData: true,
+        refetchOnWindowFocus:true,
     });
-    const addCategory = useMutation({
-        mutationFn: (data) => AddCategory(data),
-        onSuccess: () => {
-            paginatedCategories.refetch();
-            nav("/dashboard/categories");
-        }
-    });
+
     return {
         allCategories: categories.data,
         isAllLoading: categories.isLoading, 
         paginatedCategories: paginatedCategories.data,
         isPaginatedLoading: paginatedCategories.isLoading,
-        refetch: paginatedCategories.refetch,
-        addCategory: addCategory.mutate,
-        isAdding: addCategory.isPending,
-        error: addCategory.error
-    
+        refetch: paginatedCategories.refetch
     };
 }

@@ -62,7 +62,7 @@ return (
             end: swiper.isEnd,
             })
         }>
-            {slides.map((content, ind) => (
+            {slides?.map((content, ind) => (
                     <SwiperSlide key={ind}>
                         {content}
                     </SwiperSlide>))}

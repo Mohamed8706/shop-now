@@ -10,7 +10,6 @@ export const useAuth = (page = 0, limit = 0) => {
     const cookies = Cookie();
     const token = cookies.get("e-commerce"); 
 
-
     // Fetch user on load & cache it
     const UserData = useQuery({
         queryKey: ["user"],
@@ -26,6 +25,7 @@ export const useAuth = (page = 0, limit = 0) => {
         staleTime: 1000 * 60 * 5,
         enabled: page > 0 && limit > 0,
         keepPreviousData: true,
+        refetchOnMount: "always"
     })
     const loginMutation = useMutation({
         mutationFn: logIn,
@@ -52,7 +52,6 @@ export const useAuth = (page = 0, limit = 0) => {
     const addUser = useMutation({
         mutationFn: AddUser,
         onSuccess: () => {
-            Users.refetch();
             nav("/dashboard/users");
         }
     });

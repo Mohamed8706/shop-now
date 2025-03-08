@@ -122,8 +122,13 @@ export const UpdateCategory = async (id, form) => {
     }
 }
 export const AddCategory = async (form) => {
+    console.log(form)
     try {
-        await api.post(`${baseUrl}/${Cat}/${ADD}`, form)
+        await api.post(`${baseUrl}/${Cat}/${ADD}`, form, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
     } catch (err) {
         const message = err.response?.data?.message;
         throw new Error(message);
