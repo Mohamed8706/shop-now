@@ -9,6 +9,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import update from "../../../Assets/upload.png"
+import { useProducts } from "../../../hooks/useProducts";
+import { useSelectedProduct } from "../../../hooks/useSelectedProduct";
 
 
 export default function ProductUpdate() {
@@ -23,7 +25,9 @@ const [form, setForm] = useState({
     stock: ''
 });
 
+const { id }  = useParams();
 
+const {selectedProduct, isFetchingSelectedProduct} = useSelectedProduct(id);
 
 const [images, setImages] = useState([]);
 const [productImages, setProductImages] = useState([]);
@@ -45,7 +49,6 @@ function uploadImage () {
     openImage.current.click();
 }
 
-const { id }  = useParams();
 const nav = useNavigate("");
 
 
@@ -57,28 +60,19 @@ const token = cookie.get("e-commerce")
 
 
     
-    // Get Product details to fill up inputs
+    // Fill up inputs
     useEffect(() => {
-        setLoading(true)
-        axios.get(`${baseUrl}/${Product}/${id}`, {
-            headers:{
-            Authorization: "Bearer " + token,
-            }
-        })
-        .then((data) => {setForm({...form, title: data.data[0].title, 
-            description: data.data[0].description,
-            price: data.data[0].price,
-            discount: data.data[0].discount,
-            About: data.data[0].About,
-            category: data.data[0].category,
-            stock: data.data[0].stock
-        
-        })
-        setProductImages(data.data[0].images)
-    })
-        .then(() => setLoading(false))
-        .catch((err) => console.log(err))
-    }, [])
+        if (selectedProduct) {
+            setForm({...form, title: selectedProduct.title, 
+            description: selectedProduct.description,
+            price: selectedProduct.price,
+            discount: selectedProduct.discount,
+            About: selectedProduct.About,
+            category: selectedProduct.category,
+            stock: selectedProduct.stock })
+        setProductImages(selectedProduct.images)}
+    }, [selectedProduct])
+
 
     function handleChange (e) {
         setForm({...form, [e.target.name] : e.target.value})
@@ -223,11 +217,11 @@ const imagesShow = images.map((img, key) => (
     )
 
 
-
+if (loading) return <LoadingSubmit />
 
     return( 
         <>
-        {loading && <LoadingSubmit />}
+
         <div className="row p-2 " style={{margin:"12px"}}  >
         <Form className="border bg-white rounded-xl ml-1 p-4 shadow-2xl h-100"  
         onSubmit={handleUpdate}>

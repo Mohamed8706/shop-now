@@ -88,7 +88,7 @@ export const logOut = async () => {
 
 export const UpdateUser = async (id, form) => {
     try {
-        await api.post(`${baseUrl}/${USER}/edit/${id}`, form
+        await api.post(`/${USER}/edit/${id}`, form
     )} catch (err) {
         const message = err.response?.data?.message;
         throw new Error(message);
@@ -96,7 +96,7 @@ export const UpdateUser = async (id, form) => {
 }
 export const AddUser = async (form) => {
     try {
-        await api.post(`${baseUrl}/${USER}/${ADD}`, form
+        await api.post(`/${USER}/${ADD}`, form
     )} catch (err) {
         const message = err.response?.data?.message;
         console.log(err.response.data);
@@ -114,7 +114,7 @@ export const fetchPaginatedCateories = (page, limit) => fetchFromApi(`${CAT}?lim
 export const fetchSelectedCategory = (id) => fetchFromApi(`${Cat}/${id}`);
 export const UpdateCategory = async (id, form) => {
     try {
-        await api.post(`${baseUrl}/${Cat}/edit/${id}`, form
+        await api.post(`/${Cat}/edit/${id}`, form
         )
     } catch (err) {
         const message = err.response?.data?.message;
@@ -124,7 +124,7 @@ export const UpdateCategory = async (id, form) => {
 export const AddCategory = async (form) => {
     console.log(form)
     try {
-        await api.post(`${baseUrl}/${Cat}/${ADD}`, form, {
+        await api.post(`/${Cat}/${ADD}`, form, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -150,3 +150,12 @@ export const fetchProductById = async (id) => {
         throw new Error(error.response?.data?.message || "Failed to fetch product");
     }
 };
+export const UpdateProduct = async (id, form) => {
+    try {
+        await api.post(`${Product}/edit/${id}`, form
+        )
+    } catch (err) {
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+}

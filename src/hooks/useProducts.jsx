@@ -1,5 +1,5 @@
 import { useQueries, useQuery } from "@tanstack/react-query";
-import { fetchPaginatedProucts, latestProducts, latestSale, topProducts } from "../Services/Api";
+import { fetchPaginatedProucts, fetchProductById, latestProducts, latestSale, topProducts } from "../Services/Api";
 
 
 export const useProducts = (page, limit) => {
@@ -30,6 +30,8 @@ export const useProducts = (page, limit) => {
         keepPreviousData: true,
         refetchOnWindowFocus:true,
     });
+
+
     return {
         latestSale: results[0],
         latestProducts: results[1],
