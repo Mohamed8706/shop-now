@@ -8,7 +8,7 @@ import TableLoading from "./../Loading/tableLoading";
 import PaginatedItems from "./Pagination/Pagination";
 import { useEffect, useState } from "react";
 import TransformDate from "../../helpers/TransformDate";
-import { baseUrl } from "../../services/api";
+import { baseUrl } from "../../Services/Api";
 
 export default function TableShow(props) {
     const {

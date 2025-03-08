@@ -2,7 +2,7 @@ import {  useState } from "react";
 import { Link } from "react-router-dom";
 import TableShow from "../../../Components/Dashboard/Table";
 import { useCategories } from "../../../hooks/useCategories";
-import { Cat } from "../../../services/api";
+import { Cat } from "../../../Services/Api";
 
 
 export default function Categories() {

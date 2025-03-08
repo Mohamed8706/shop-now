@@ -138,6 +138,7 @@ export const AddCategory = async (form) => {
 export const latestSale = () => fetchFromApi(LatestSale);
 export const latestProducts = () => fetchFromApi(LatestProducts);
 export const topProducts = () => fetchFromApi(TopProducts);
+export const fetchPaginatedProucts = (page, limit) => fetchFromApi(`${Products}?limit=${limit}&page=${page}`);
 
 export const fetchProductById = async (id) => {
     if (!id) throw new Error("Product ID is required");
