@@ -2,7 +2,6 @@ import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 import { DropdownButton } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAuth } from './../../../hooks/useAuth';
-
 import { NavLink } from "react-router-dom";
 import  Cookie  from 'cookie-universal';
 
@@ -29,7 +28,7 @@ export function UserIcon() {
                     <NavLink to="/" className={"d-flex align-items-center gap-2 m-2"}>
                         Home
                     </NavLink>
-                    {["1999", "1995", "1996"].includes(user.role) && (
+                    {["1999", "1995", "1996"].includes(user?.role) && (
                         <NavLink
                             to="/dashboard"
                             className={"d-flex align-items-center gap-2 m-2"}

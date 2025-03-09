@@ -13,9 +13,27 @@ export const useAuth = (page = 0, limit = 0) => {
     // Fetch user on load & cache it
     const UserData = useQuery({
         queryKey: ["user"],
-        queryFn: fetchUser,
-        enabled: !!token, 
-        staleTime: 1000 * 60 * 5,
+        queryFn: async () => {
+            const response = await fetchUser();
+            const userData = response.data;
+            if (userData?.access_token) {
+                cookies.set("e-commerce", userData.access_token, {
+                path: "/",
+                expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
+                });
+            }
+            return userData;
+            },
+            enabled: !!token,
+            staleTime: 1000 * 60 * 5,
+            refetchInterval: 1000 * 60 * 15,
+            onError: (err) => {
+            if (err.response?.status === 401) {
+                cookies.remove("e-commerce");
+                queryClient.removeQueries(["user"]);
+                nav("/login", { replace: true });
+            }
+            },
     });
 
     // Fetch paginated users and keep the old data stored 

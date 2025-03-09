@@ -3,6 +3,7 @@ import LoadingSubmit from '../../../Components/Loading/loading';
 import { Form } from "react-bootstrap";
 import  GoogleIcon  from "../../../Assets/icons8-google.svg";
 import { useAuth } from "../../../hooks/useAuth";
+import { baseUrl } from "../../../Services/Api";
 
 
 
@@ -52,7 +53,7 @@ export default function AddUser() {
                     <Form className="form" onSubmit={handleSubmit} style={{padding: "10px"}}>
                         <div className="custom-form">
                             <div className="google-wraper">
-                                <a href="http://127.0.0.1:8000/login-google">
+                                <a href={`${baseUrl}/login-google`}>
                                 <img src={GoogleIcon} className="google-icon"
                                             alt="google-icon" />
                                     <p className="par">Continue with Google</p>
