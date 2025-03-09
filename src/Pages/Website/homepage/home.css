@@ -93,9 +93,6 @@
     grid-template-columns: 1fr 1fr;
   }
 }
-input[type="search"].cat-search{
-    padding-left: 70px;
-}
 
 /* Webkit browsers (Chrome, Safari, newer Edge) */
 input[type="number"]::-webkit-outer-spin-button,

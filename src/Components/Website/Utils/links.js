@@ -38,3 +38,65 @@ export const links = [
         role: ['1995', '1999']
     }
 ]
+
+export const footerLinks = [
+["About Us",{
+        name: "Vision",
+        path: "/"
+    },
+    {
+        name: "Articles",
+        path: "/"
+    },
+    {
+        name: "Careers",
+        path: "/"
+    },
+    {
+        name: "Service Terms",
+        path: "/"
+    },],
+    ["Discover",
+    {
+        name: "Home",
+        path: "/"
+    },
+    {
+        name: "Books",
+        path: "/"
+    },
+    {
+        name: "Authors",
+        path: "/"
+    },
+    {
+        name: "Subjects",
+        path: "/"
+    },],
+    ["My Account",
+    {
+        name: "Sign In",
+        path: "/login"
+    },
+    {
+        name: "Track My Order",
+        path: "/"
+    },],
+    ["Help",
+    {
+        name: "Help Center",
+        path: "/"
+    },
+    {
+        name: "Report a Problem",
+        path: "/"
+    },
+    {
+        name: "Suggesting Edits",
+        path: "/"
+    },
+    {
+        name: "Contact Us",
+        path: "/"
+    }]
+]

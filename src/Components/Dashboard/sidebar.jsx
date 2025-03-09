@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { memo, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { WindowSize } from "../../context/windowresize";
-import { links } from "./links";
+import { links } from "../Website/Utils/links";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../hooks/useAuth";
 

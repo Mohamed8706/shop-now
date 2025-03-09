@@ -5,6 +5,7 @@ import OurFeatures from "../../../Components/Website/Dividers/OurFeatures";
 import Subscribe from "../../../Components/Website/Dividers/Subscribe";
 import Categoriesection from "../../../Components/Website/Categories/CategoriesSection";
 import { useProducts } from "../../../hooks/useProducts";
+import Footer from "../../../Components/Website/Navigation/Footer";
 
 
 
@@ -20,6 +21,7 @@ export default function HomePage() {
             <ProductSection title="Latest Products"  data={latestProducts.data} isLoading={latestProducts.isLoading} />
             <Subscribe />
             <ProductSection title="Top Rated Products"  data={topProducts.data} isLoading={topProducts.isLoading} />
+            <Footer />
         </>
     );
 }
