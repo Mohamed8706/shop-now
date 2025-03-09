@@ -35,9 +35,7 @@ export default function SingleProduct() {
             dispatch(handlePopUp("adding"))
         }
     };
-
-
-
+    
     const totalPrice = qty * product?.price;
     if (isFetching) return <SingleProductSekelton />;
     return (

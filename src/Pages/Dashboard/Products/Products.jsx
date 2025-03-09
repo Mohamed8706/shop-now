@@ -3,7 +3,6 @@ import {  Product } from "../../../Services/Api";
 import { Link } from "react-router-dom";
 import TableShow from "../../../Components/Dashboard/Table";
 import { useProducts } from "../../../hooks/useProducts";
-import LoadingSubmit from './../../../Components/Loading/loading';
 
 
 export default function ProductsPage() {
@@ -73,6 +72,7 @@ export default function ProductsPage() {
         setPage={setPage} 
         setLimit={setLimit} 
         loading={loading}
+        queryKey="paginated-products"
       />
     </div>
   );

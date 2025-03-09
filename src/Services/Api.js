@@ -99,7 +99,6 @@ export const AddUser = async (form) => {
         await api.post(`/${USER}/${ADD}`, form
     )} catch (err) {
         const message = err.response?.data?.message;
-        console.log(err.response.data);
         throw new Error(message);
     }
 }
@@ -122,7 +121,6 @@ export const UpdateCategory = async (id, form) => {
     }
 }
 export const AddCategory = async (form) => {
-    console.log(form)
     try {
         await api.post(`/${Cat}/${ADD}`, form, {
             headers: {
@@ -154,6 +152,47 @@ export const UpdateProduct = async (id, form) => {
     try {
         await api.post(`${Product}/edit/${id}`, form
         )
+    } catch (err) {
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+}
+export const deleteProductImages = async (productIds) => {
+    try {
+        const requests = await productIds.map((id) => api.delete(`/product-img/${id}`));
+        return Promise.all(requests)
+    } catch (error) {
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+}
+
+export const uploadProductImage = async (formData, onUploadProgress) => {
+    try {
+        const response = await api.post(`/product-img/add`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            },
+            onUploadProgress
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || "Failed to upload image");
+    }
+};
+export const addInitialProduct = async (form) => {
+    try {
+        const response = await api.post(`/${Product}/${ADD}`, form
+        )
+        return response.data
+    } catch (err) {
+        const message = err.response?.data?.message;
+        throw new Error(message);
+    }
+}
+export const editInitialProduct = async ({form, id}) => {
+    try {
+        await api.post(`/${Product}/edit/${id}`, form)
     } catch (err) {
         const message = err.response?.data?.message;
         throw new Error(message);

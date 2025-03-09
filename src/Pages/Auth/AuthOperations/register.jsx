@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import LoadingSubmit from '../../../Components/Loading/loading';
-
 import { Form } from "react-bootstrap";
 import GoogleIcon from "../../../Assets/icons8-google.svg";
-
 import { useAuth } from "../../../hooks/useAuth";
 
 

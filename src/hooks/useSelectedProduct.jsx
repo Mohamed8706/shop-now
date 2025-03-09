@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { fetchProductById } from "../Services/Api";
+import { deleteProductImages, fetchProductById, UpdateProduct } from "../Services/Api";
 import { useNavigate } from "react-router-dom";
 
 
@@ -18,11 +18,14 @@ export const useSelectedProduct = (id) => {
             nav("/dashboard/products");
         },
     })
-
+    const deleteSelectedProductImages = useMutation({
+        mutationFn: deleteProductImages,
+    })
     return {
         selectedProduct: selectedProduct.data,
         isFetchingSelectedProduct: selectedProduct.isLoading,
         update: updateSelectedProduct.mutate,
-        isUpdating: updateSelectedProduct.isPending
+        isUpdating: updateSelectedProduct.isPending,
+        deleteProductImages: deleteSelectedProductImages.mutate
     }
 }

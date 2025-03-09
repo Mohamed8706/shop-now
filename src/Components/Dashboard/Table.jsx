@@ -1,6 +1,5 @@
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
 import { FormControl, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Cookie from "cookie-universal";
@@ -9,6 +8,9 @@ import PaginatedItems from "./Pagination/Pagination";
 import { useEffect, useState } from "react";
 import TransformDate from "../../helpers/TransformDate";
 import { baseUrl } from "../../Services/Api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+
 
 export default function TableShow(props) {
     const {
@@ -20,72 +22,81 @@ export default function TableShow(props) {
         setPage,
         loading,
         title,
+        queryK
     } = props;
     const currentUser = props.currentUser || {
         name: "",
     };
 
-    // Handle Paginate for searched data
-    const start = (page - 1) * limit;
-    const end = page * limit;
-    const [search, setSearch] = useState("");
-    const [date, setDate] = useState("");
-    const [searchedData, setSearchedData] = useState([]);
-    const filterdByName = searchedData.slice(start, end).filter(
-        (item) => (date ? TransformDate(item.created_at) == date : item));
-    const filterdByDate = data?.data?.filter(
-        (item) => date ? TransformDate(item.created_at) == date : item
-    );
-    
-    const filterdData = search.length > 0 ? filterdByName : filterdByDate;
+    const queryClient = useQueryClient();   
 
+    
 
     // Cookies
     const cookie = Cookie();
     const token = cookie.get("e-commerce");
 
-    // Handle Delete Button
-    async function handleDelete(id) {
-        try {
-            axios
-                .delete(`${baseUrl}/${title}/${id}`, {
-                    headers: {
-                        Authorization: "Bearer " + token,
-                    },
-                })
+    // State
+    const [search, setSearch] = useState("");
+    const [date, setDate] = useState("");
+    const [searchedData, setSearchedData] = useState([]);
+    
+    // Pagination
+    const start = (page - 1) * limit;
+    const end = page * limit;
+    const filterdByName = searchedData.slice(start, end).filter(
+        (item) => (date ? TransformDate(item.created_at) === date : item)
+    );
+    const filterdByDate = data?.data?.filter(
+        (item) => (date ? TransformDate(item.created_at) === date : item)
+    );
+    const filterdData = search.length > 0 ? filterdByName : filterdByDate;
 
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    // Handle search
-    async function getSearchedData() {
-        try {
+    // Search Query
+    const { refetch: refetchSearch } = useQuery({
+        queryKey: ['search', title, search],
+        queryFn: async () => {
             const res = await axios.post(
                 `${baseUrl}/${title}/search`,
-                {
-                    title: search,
-                },
-                {
-                    headers: { Authorization: `Bearer ${token}` },
-                }
+                { title: search },
+                { headers: { Authorization: `Bearer ${token}` } }
             );
             setSearchedData(res.data);
-        } catch (error) {
-            console.log(error);
-        }
-    }
+            return res.data;
+        },
+        enabled: false, // Manual trigger only
+    });
 
+// Delete Mutation
+    const deleteMutation = useMutation({
+        mutationFn: (id) => axios.delete(`${baseUrl}/${title}/${id}`, {
+            headers: {
+                Authorization: "Bearer " + token,
+            },
+            
+        }),
+        onSuccess: () => {
+            queryClient.invalidateQueries([queryK]);
+        },
+    });
+
+    // Handle Delete
+    const handleDelete = (id) => {
+            deleteMutation.mutate(id);
+    };
+
+    // Search Effect
     useEffect(() => {
         const debounce = setTimeout(() => {
-            search.length > 0 && getSearchedData();
+            if (search.length > 0) {
+                refetchSearch();
+            }
         }, 600);
 
         return () => clearTimeout(debounce);
-    }, [search]);
+    }, [search, refetchSearch]);
 
-    // Mapping over data
+    // Mapping over data 
     const headerShow = header.map((item, key) => <th key={key}>{item.name}</th>);
     const dataShow = filterdData?.map((item) => (
         <tr key={item.id}>
@@ -97,6 +108,7 @@ export default function TableShow(props) {
             {header.map((item2) => (
                 <td key={item2.value}>
                     <div className="flex flex-row h-full gap-2 items-center justify-center flex-wrap text-xl">
+
                         {item[item2.value] === "1995" ? (
                             "Admin"
                         ) : item[item2.value] === "2001" ? (
@@ -114,7 +126,7 @@ export default function TableShow(props) {
                                 <img key={idx} src={(`https://ecommerce-backend-production-5ad6.up.railway.app` + i.image)} 
                                 alt="in" className="w-12" />
                             ))
-                        ) : item2.value === "created_at" || item2.value == "updated_at" ? (
+                        ) : item2.value === "created_at" || item2.value === "updated_at" ? (
                             TransformDate(item[item2.value])
                         ) : (
                             <>
@@ -140,6 +152,7 @@ export default function TableShow(props) {
                                 height: "30px",
                             }}
                             onClick={() => handleDelete(item.id)}
+                            disabled={deleteMutation.isLoading}
                         />
                     )}
                     <Link to={`${item.id}`}>
@@ -152,6 +165,7 @@ export default function TableShow(props) {
             </td>
         </tr>
     ));
+
 
     return (
         <>
@@ -186,7 +200,7 @@ export default function TableShow(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loading ? (
+                        {loading || deleteMutation.isLoading ? (
                             <tr>
                                 <TableLoading />
                                 <TableLoading />

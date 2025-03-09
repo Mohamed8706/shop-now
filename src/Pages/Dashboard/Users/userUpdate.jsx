@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import LoadingSubmit from '../../../Components/Loading/loading';
-import  Cookie  from 'cookie-universal';
-import { baseUrl, USER } from "../../../Services/Api";
 import { useUser } from "../../../hooks/useUser";
 
 

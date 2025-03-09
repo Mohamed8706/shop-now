@@ -2,7 +2,6 @@ import {  Outlet } from "react-router-dom";
 import { SideBar } from "../../Components/Dashboard/sidebar";
 import { useContext } from "react";
 import { WindowSize } from "../../context/windowresize";
-
 import NavigationBar from "../../Components/Dashboard/NavBar";
 import { useSelector } from "react-redux";
 

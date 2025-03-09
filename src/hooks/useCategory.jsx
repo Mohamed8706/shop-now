@@ -1,13 +1,12 @@
-import { useMutation, useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { AddCategory, fetchSelectedCategory, UpdateCategory } from "../Services/Api"
-import { useNavigate } from "react-router-dom"
-import { useCategories } from "./useCategories";
+import { useNavigate } from "react-router-dom";
 
 export const useCategory = (id) => {
     const nav = useNavigate();
-    const page = 1;
-    const limit = 5;
-    const { refetch } = useCategories(page, limit);
+
+    const queryClient = useQueryClient();
+    
 
     const selectedCategory = useQuery({
         queryKey: ["category", id],
@@ -24,7 +23,7 @@ export const useCategory = (id) => {
         const addCategory = useMutation({
         mutationFn: (data) => AddCategory(data),
         onSuccess: () => {
-            refetch();
+            queryClient.invalidateQueries(["categories"]);
             nav("/dashboard/categories");
         }
     });

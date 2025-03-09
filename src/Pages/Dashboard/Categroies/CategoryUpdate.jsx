@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
-import axios from "axios";
-import { baseUrl, CAT, Cat } from "../../../Services/Api";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import LoadingSubmit from '../../../Components/Loading/loading';
-import  Cookie  from 'cookie-universal';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { useCategory } from "../../../hooks/useCategory";

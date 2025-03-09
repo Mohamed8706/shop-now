@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import TableShow from "../../../Components/Dashboard/Table";
 import { useAuth } from "../../../hooks/useAuth";
-import { USER } from "../../../services/api";
+import { USER } from "../../../Services/Api";
 
 export default function Users() {
     // States
@@ -10,10 +10,9 @@ export default function Users() {
     const [limit, setLimit] = useState(1);
 
     // Enable user fetching only when this component is loaded
-    const { users, isFetchingUsers: loading } = useAuth(page,limit);
+    const { users, isFetchingUsers: loading, user: currentUser } = useAuth(page,limit);
 
-    const {user: currentUser} = useAuth();
-    console.log(users)
+
     // Passing Headers
     const header = [
         {
@@ -61,6 +60,7 @@ export default function Users() {
             setPage={setPage}
             setLimit={setLimit}
             loading={loading}
+            queryK="users"
             />
         </div>
         </div>

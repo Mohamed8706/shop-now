@@ -60,6 +60,7 @@ export default function Categories() {
                     setPage={setPage}
                     setLimit={setLimit}
                     title={Cat}
+                    queryKey="categories"
                 />
             </div>
         </div>

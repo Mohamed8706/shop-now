@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import { AddUser, fetchUser, fetchUsers, logIn, logOut, register } from "../Services/Api";
 import { useNavigate } from "react-router-dom";
 import Cookie from "cookie-universal";
@@ -9,7 +9,7 @@ export const useAuth = (page = 0, limit = 0) => {
 
     const cookies = Cookie();
     const token = cookies.get("e-commerce"); 
-
+    const queryClient = useQueryClient();
     // Fetch user on load & cache it
     const UserData = useQuery({
         queryKey: ["user"],
@@ -25,7 +25,6 @@ export const useAuth = (page = 0, limit = 0) => {
         staleTime: 1000 * 60 * 5,
         enabled: page > 0 && limit > 0,
         keepPreviousData: true,
-        refetchOnMount: "always"
     })
     const loginMutation = useMutation({
         mutationFn: logIn,
@@ -52,6 +51,7 @@ export const useAuth = (page = 0, limit = 0) => {
     const addUser = useMutation({
         mutationFn: AddUser,
         onSuccess: () => {
+            queryClient.invalidateQueries(["users"]);
             nav("/dashboard/users");
         }
     });
@@ -59,6 +59,7 @@ export const useAuth = (page = 0, limit = 0) => {
         user: UserData.data,
         isFetchingUser: UserData.isLoading,
         users: Users.data,
+        refetch: Users.refetch,
         isFetchingUsers: Users.isLoading,
         login: loginMutation.mutate, 
         isLoggingIn: loginMutation.isPending,
