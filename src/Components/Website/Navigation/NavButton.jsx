@@ -4,7 +4,7 @@ import { openCart } from "../../../Redux/Slices/CartSlice";
 
 export default function NavButton() {
     const handleFocus = () => {
-        const search = document.querySelector(".cat-search");
+        const search = document.querySelector("#search");
         search.focus();
     }
     const dispatch = useDispatch();

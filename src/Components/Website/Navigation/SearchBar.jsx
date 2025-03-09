@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { FormControl } from "react-bootstrap"; // Kept for form input functionality
+import { FormControl } from "react-bootstrap"; 
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { useQuery } from "@tanstack/react-query";
 import { baseUrl, Product } from "./../../../Services/Api";
@@ -32,8 +32,6 @@ export function SearchBar() {
   const handleSearch = () => {
     if (search.length > 0) {
       refetchSearch();
-    } else {
-      console.log("Search is empty, no fetch triggered.");
     }
   };
 
@@ -43,9 +41,10 @@ export function SearchBar() {
       <div className="relative flex items-center">
         <FormControl
           type="search"
+          id="search"
           placeholder="Search Product"
           className="shadow-none py-3 px-4 w-full border-3
-          !rounded-full  "
+          !rounded-full "
           onChange={(e) => setSearch(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && handleSearch()}
         />
@@ -73,7 +72,7 @@ export function SearchBar() {
                   <Link to={`/product/${pro.id}`} className="flex items-center p-3 text-gray-800
                   hover:bg-gray-100 transition-colors duration-200">
                     <img
-                      src={`https://ecommerce-backend-production-5ad6.up.railway.app${pro.images[0].image}`}
+                      src={`${import.meta.env.VITE_API_BASE_URL}${pro.images[0].image}`}
                       alt={pro.title}
                       className="w-12 h-12 object-cover rounded mr-3"
                       onError={(e) => (e.target.src = SearchIcon)}

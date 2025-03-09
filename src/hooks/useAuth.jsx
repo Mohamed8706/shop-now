@@ -15,14 +15,15 @@ export const useAuth = (page = 0, limit = 0) => {
         queryKey: ["user"],
         queryFn: async () => {
             const response = await fetchUser();
-            const userData = response.data;
+            const userData = response;
             if (userData?.access_token) {
-                cookies.set("e-commerce", userData.access_token, {
+                cookies.set("e-commerce", userData?.access_token, {
                 path: "/",
                 expires: new Date(Date.now() + 1000 * 60 * 60 * 24),
                 });
             }
-            return userData;
+            
+            return response;
             },
             enabled: !!token,
             staleTime: 1000 * 60 * 5,

@@ -10,17 +10,16 @@ export default function GoogleCallBack() {
   const location = useLocation();
   const navigate = useNavigate();
   const cookie = Cookie();
-  const [status, setStatus] = useState("loading"); // "loading", "success", "error"
+  const [status, setStatus] = useState("loading"); 
 
   useEffect(() => {
     async function GoogleCall() {
       try {
         const res = await axios.get(`${baseUrl}/${GOOGLE_CALL_BACK}${location.search}`);
         const token = res.data.access_token;
-        cookie.set("e-commerce", token); // Fixed space in cookie name
+        cookie.set("e-commerce", token); 
         setStatus("success");
       } catch (err) {
-        console.error("Google callback error:", err);
         setStatus("error");
       }
     }
@@ -65,7 +64,7 @@ export default function GoogleCallBack() {
         {status === "error" && (
           <div className="flex flex-col items-center gap-4">
             <FontAwesomeIcon
-              icon={faCheckCircle} // Could replace with faExclamationCircle
+              icon={faCheckCircle} 
               className="text-red-500 text-5xl"
             />
             <h1 className="text-2xl font-semibold text-gray-800">

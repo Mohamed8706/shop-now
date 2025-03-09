@@ -24,8 +24,8 @@ export default function SingleProduct() {
     
     // Gallery Images
     const images = product?.images.map((img) => ({
-        original: "https://ecommerce-backend-production-5ad6.up.railway.app" + img.image,
-        thumbnail: "https://ecommerce-backend-production-5ad6.up.railway.app" + img.image
+        original: `${import.meta.env.VITE_API_BASE_URL}` + img.image,
+        thumbnail: `${import.meta.env.VITE_API_BASE_URL}` + img.image
     })); 
 
 

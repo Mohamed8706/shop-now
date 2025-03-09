@@ -1,7 +1,11 @@
 import axios from "axios";
 import Cookie from "cookie-universal";
 
-export const baseUrl = `https://ecommerce-backend-production-5ad6.up.railway.app/api`;
+
+
+export const baseUrl = `${import.meta.env.VITE_API_BASE_URL}/api`;
+
+
 // Auth
 export const REGISTER = "register";
 export const LOGIN = "login";
@@ -67,7 +71,7 @@ export const register = async (credentials) => {
     try {
         const { data } = await api.post(`/${REGISTER}`, credentials);
         const cookie = Cookie();
-        cookie.set("e-commerce", data.token); // Store token in cookies
+        cookie.set("e-commerce", data.token); 
         return data.user;
     } catch (error) {
         const message = error.response?.data?.message || "Registration failed. Please try again.";

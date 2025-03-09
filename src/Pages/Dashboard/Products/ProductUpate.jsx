@@ -58,9 +58,6 @@ export default function ProductUpdate() {
         onSuccess: (data, variables) => {
             imagesId.current[variables.index] = data.id;
         },
-        onError: (error) => {
-            console.error("Image upload failed:", error);
-        },
     });
 
     useEffect(() => {
@@ -154,7 +151,7 @@ export default function ProductUpdate() {
         <div key={key} className="w-100 relative border p-2">
             <div className="flex flex-row gap-2">
                 <img
-                    src={`https://ecommerce-backend-production-5ad6.up.railway.app${img.image}`}
+                    src={`${import.meta.env.VITE_API_BASE_URL}${img.image}`}
                     alt="product"
                     className="w-[80px]"
                 />

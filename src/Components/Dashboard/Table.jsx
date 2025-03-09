@@ -118,12 +118,12 @@ export default function TableShow(props) {
                         ) : item2.value === "image" ? (
                             <img
                                 className="object-contain w-12"
-                                src={(`https://ecommerce-backend-production-5ad6.up.railway.app` + item[item2.value])}
+                                src={(`${import.meta.env.VITE_API_BASE_URL}` + item[item2.value])}
                                 alt="image"
                             />
                         ) : item2.value === "images" ? (
                             item[item2.value].map((i, idx) => (
-                                <img key={idx} src={(`https://ecommerce-backend-production-5ad6.up.railway.app` + i.image)} 
+                                <img key={idx} src={(`${import.meta.env.VITE_API_BASE_URL}` + i.image)} 
                                 alt="in" className="w-12" />
                             ))
                         ) : item2.value === "created_at" || item2.value === "updated_at" ? (

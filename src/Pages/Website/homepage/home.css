@@ -69,11 +69,11 @@
     --animate-duration: 2s;
   }
 .bt:hover{
-  transform: scale(1.1);
-  transition: all 0.3s ease-in-out;
+  transform: scale(1.1) !important;
+  transition: all 0.3s ease-in-out !important;
 }
 .bt:not(:hover){
-  transition-duration: 0.3s;
+  transition-duration: 0.3s !important;
 }
 .categories  .dropdown-menu.show{
   margin-top: 10px;

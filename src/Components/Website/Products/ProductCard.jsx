@@ -26,7 +26,7 @@ export default function ProductCard({ data }) {
             <Link to={`/product/${data.id}`} className="text-[#333333] navigation-link">
                 <div className="relative w-full h-64 rounded-lg overflow-hidden cursor-pointer">
                     <img
-                        src={"https://ecommerce-backend-production-5ad6.up.railway.app" + data.images[0].image}
+                        src={`${import.meta.env.VITE_API_BASE_URL}` + data.images[0].image}
                         alt={data.title}
                         className="w-full h-full object-cover"
                     />

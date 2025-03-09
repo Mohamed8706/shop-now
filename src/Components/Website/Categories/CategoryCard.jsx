@@ -7,7 +7,7 @@ export default function CategoryCard({ data }) {
             {/* Image */}
             <div className="relative col-10 h-2/3 rounded-lg overflow-hidden cursor-pointer">
                 <img
-                    src={("https://ecommerce-backend-production-5ad6.up.railway.app" + data.image)}
+                    src={(`${import.meta.env.VITE_API_BASE_URL}` + data.image)}
                     alt={data.title}
                     className="w-full h-full object-cover"/>
             </div>

@@ -11,6 +11,6 @@ export default function RequireAuth( {allowedRole} ) {
     const token = cookies.get("e-commerce");
 
     const {user, isFetchingUser} = useAuth();
-    
+
     return token ? (isFetchingUser ? (<LoadingSubmit />) : allowedRole.includes(user.role) ? (<Outlet />) : (<Err403 role={user.role}/>) ) : (<Navigate to={"/login"}  replace={true}/>);
 }

@@ -9,7 +9,7 @@ export default function Users() {
     const [page, setPage] = useState(1);
     const [limit, setLimit] = useState(1);
 
-    // Enable user fetching only when this component is loaded
+    
     const { users, isFetchingUsers: loading, user: currentUser } = useAuth(page,limit);
 
 
