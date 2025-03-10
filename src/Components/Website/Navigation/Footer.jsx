@@ -1,5 +1,5 @@
 import { footerLinks } from "../Utils/links";
-import Logo from "../../../Assets/elegant_online_shopping_logo_template-removebg-preview.png";
+import Logo from "../../../Assets/Elegant_Online_Shopping_Logo_Template-removebg-preview.png";
 import { Link } from "react-router-dom";
 
 export default function Footer() {
