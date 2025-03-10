@@ -11,12 +11,12 @@ export default function ProductSection(props) {
   const {title, data: fetchedData, isLoading: loading} = props;
 
     const slides = loading ?
-    Array.from({length: 5}).map((item) => <ProductSkeleton />) :
-      fetchedData?.map((item) => <ProductCard data={item}/>)
+    Array.from({length: 5}).map((item, ) => <ProductSkeleton />) :
+      fetchedData?.map((item) => <ProductCard key={item.id} data={item}/>)
 
 
   return (
-    <div className="h-full">
+    <div className="h-full product-section">
     <MainSwiper title={title} slides={slides} />
     </div>
 

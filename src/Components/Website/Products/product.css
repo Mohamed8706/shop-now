@@ -27,3 +27,34 @@ button[class*="prev-"]:disabled, button[class*="next-"]:disabled{
   background-color: #eaeaea;
   color: #ccc;
 }
+
+
+
+/* Base margin for normal zoom */
+.product-section {
+  margin-block: 6rem;
+}
+
+@media (-webkit-device-pixel-ratio: 1.1), (device-pixel-ratio: 1.1) {
+  .product-section {
+    margin-block: 9rem !important;
+  }
+}
+@media (-webkit-device-pixel-ratio: 1.25), (device-pixel-ratio: 1.25) {
+  .product-section {
+    margin-block:12rem !important;
+  }
+}
+
+@media (-webkit-device-pixel-ratio: 1.5), (device-pixel-ratio: 1.5) {
+  .product-section {
+    margin-block: 15rem !important; 
+  }
+}
+
+/* Fallback: Adjust for smaller viewports (simulates zoom effect) */
+@media screen and (max-width: 768px) {
+  .product-section {
+    margin-block: 3rem !important; /* Ensure spacing on smaller screens */
+  }
+}
