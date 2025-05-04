@@ -6,12 +6,12 @@ import AddToCartPopup from '../../../helpers/AddToCartPopUp';
 import Cart from './../Utils/Cart';
 import Logo from './../../../Assets/Elegant_Online_Shopping_Logo_Template-removebg-preview.png';
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+
 
 
 
 export default function TopBar() {
-    const [isVisible, setIsVisible] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
     const [prevScrollPos, setPrevScrollPos] = useState(0);
 
     useEffect(() => {
