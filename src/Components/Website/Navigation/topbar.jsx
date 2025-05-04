@@ -13,7 +13,7 @@ import { motion } from 'framer-motion';
 export default function TopBar() {
     const [isVisible, setIsVisible] = useState(false);
     const [prevScrollPos, setPrevScrollPos] = useState(0);
-    console.log(isVisible)
+
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollPos = window.pageYOffset;
@@ -34,7 +34,7 @@ export default function TopBar() {
     
         <nav className={`py-2 fixed z-999 px-3 top-0 right-0 w-full bg-white transition-transform duration-300
             ${isVisible ? "translate-y-0" : "translate-y-[-100%] "} `}>
-                
+
             <Container style={{marginTop: "0px"}}>
             <div className="flex flex-wrap items-center gap-md-0 gap-4 justify-between">
                 <Link to="/" className="col-3 hover:!bg-transparent">
