@@ -19,3 +19,11 @@ input[type="search"]::-webkit-search-cancel-button{
     display: none;
     padding-right: 10px;
 }
+.swiper-button-next::after, .swiper-button-prev::after {
+    color: #36ce70 !important;
+    font-size: 60px;
+    @media screen and (max-width: 768px) {
+        display: none !important;
+        
+    }
+}

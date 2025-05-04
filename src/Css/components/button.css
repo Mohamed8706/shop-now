@@ -6,8 +6,9 @@
     font-weight: 500 !important;
     transition: 0.2s !important;
 }
-
-
+.btn:disabled{
+    opacity: 0.3 !important;
+}
 .btn-primary {
     background-color: #f5f5f5 !important;
     color: #21203f !important;

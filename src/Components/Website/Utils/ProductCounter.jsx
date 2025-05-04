@@ -25,25 +25,25 @@ const handleDecrease = () => {
 
     return (
 <div className="product-qty w-1/2 gap-1 flex flex-row">
-                        <span>
-                            <Button onClick={handleDecrease}>
-                                <Minus />
-                            </Button>
-                        </span>
-                        <FormControl
-                            type="number"
-                            inputMode="numeric"
-                            min={1}
-                            max={100}
-                            className="!w-12"
-                            value={count}
-                            onChange={handleInputChange}
-                        ></FormControl>
-                        <span>
-                            <Button onClick={handleIncrease}>
-                                <Plus />
-                            </Button>
-                        </span>
+            <span>
+                <Button onClick={handleDecrease} disabled={count === 1}>
+                    <Minus />
+                </Button>
+            </span>
+            <FormControl
+                type="number"
+                inputMode="numeric"
+                min={1}
+                max={100}
+                className="!w-12"
+                value={count}
+                onChange={handleInputChange}
+            ></FormControl>
+            <span>
+                <Button onClick={handleIncrease}>
+                    <Plus />
+                </Button>
+            </span>
     </div>
     )
 }

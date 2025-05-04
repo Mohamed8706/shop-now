@@ -1,14 +1,17 @@
 import { useMemo, useCallback, useState, useEffect } from "react";
 import { XCircleIcon } from "lucide-react";
-import { Offcanvas } from "react-bootstrap";
+import { CloseButton, Offcanvas } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { calculateTotals, handlePopUp, openCart, removeFromCart } from "../../../Redux/Slices/CartSlice";
+import ProductCounter from "./ProductCounter";
+import CartProductCounter from "./CartProductCounter";
 
 
 export default function Cart() {
     // States
+    const [qty, setQty] = useState(1);
     const show = useSelector((state) => state.cart.isOpen);
 
     const cartData = useSelector((state) => state.cart)   
@@ -29,25 +32,18 @@ const renderCartItems = useMemo(() => {
         cartData.items.map((product, index) => (
             <div key={index} className="flex relative w-full justify-between border-b-2 p-3">
                 <div className="w-2/3">
-                    <p className="fw-bold mb-1 text-2xl">{product.title}</p>
-                    <p className="text-muted mb-0 text-xl">{product.description}</p>
+                    <p className="fw-bold mb-1 text-xl">{product.title}</p>
+                    <p className="text-muted mb-0 text-lg">{product.description}</p>
                 </div>
-                <div className="flex flex-col justify-between items-end">
-                    <XCircleIcon 
-                        className="cursor-pointer" 
-                        onClick={() => {
-                            dispatch(removeFromCart(product.id))
-                            dispatch(handlePopUp("removing"))
-                        
-                        }} 
-                        size={35} 
-                        color="red" 
-                    />
+                <div className="flex flex-col gap-2 w-1/3 justify-between items-end">
                     <p className="text-gray-500 fw-bold">$ {product.price * product.count}</p>
+                    <CartProductCounter setQty={setQty} product={product}/>
                     <span className="bg-primary text-xl rounded-full w-8 h-8 flex justify-center items-center font-semibold text-white">
                         {product.count}
                     </span>
+                    
                 </div>
+
             </div>
         ))
     ) : (
@@ -68,7 +64,8 @@ const renderCartItems = useMemo(() => {
 
                 
         <Offcanvas show={show} onHide={handleClose} placement="end" className="items-center md:!w-[550px] f-cairo cart-cart">
-            <Offcanvas.Header closeButton className="text-2xl p-4">
+            <Offcanvas.Header  className="text-2xl p-4">
+                    <XCircleIcon onClick={handleClose} size={40} color="#06c44fcc" className="cursor-pointer"/> 
                 <Offcanvas.Title></Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body className="w-full">

@@ -48,9 +48,19 @@ const CartSlice = createSlice({
         openCart: (state, action) => {
             if (action.payload === "open") state.isOpen = true;
             if (action.payload === "close") state.isOpen = false;
-        }
+        },
+        ProductCount: (state, action) => {
+            const product = action.payload.product;
+            const exisitngItem = state.items.find((item) => item.id === product.id);
+            if (action.payload.type === "increment") {
+                exisitngItem.count +=1;
+            } else if (action.payload.type === "decrement") {
+                exisitngItem.count -= 1;
+            }
+            localStorage.setItem("Cart", JSON.stringify(state.items))
+        },
     }
 })
 
-export const {addToCart, removeFromCart, calculateTotals, handlePopUp, openCart} = CartSlice.actions;
+export const {addToCart, removeFromCart, calculateTotals, handlePopUp, openCart, ProductCount} = CartSlice.actions;
 export default CartSlice.reducer;

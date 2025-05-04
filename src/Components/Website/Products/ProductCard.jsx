@@ -49,7 +49,7 @@ export default function ProductCard({ data }) {
                 <div className="flex w-full flex-col items-stretch justify-start">
                     <h4 className="text-gray-800 font-bold">${data.price}</h4>
                     <p className="text-gray-400 text-lg line-through">
-                        ${+data.price + +(data.discount * data.price) / 100}
+                        ${(+data.price + +(data.discount * data.price) / 100).toFixed(0)}
                     </p>
                     {data.stock < qty ? (
                         <p className="text-red-500 text-lg h-6">Only {data.stock} left in stock</p>

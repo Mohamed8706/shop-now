@@ -117,8 +117,13 @@ export const fetchPaginatedCateories = (page, limit) => fetchFromApi(`${CAT}?lim
 export const fetchSelectedCategory = (id) => fetchFromApi(`${Cat}/${id}`);
 export const UpdateCategory = async (id, form) => {
     try {
-        await api.post(`/${Cat}/edit/${id}`, form
+        await api.post(`/${Cat}/edit/${id}`, form, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }
         )
+        
     } catch (err) {
         const message = err.response?.data?.message;
         throw new Error(message);
@@ -131,6 +136,7 @@ export const AddCategory = async (form) => {
                 "Content-Type": "multipart/form-data"
             }
         })
+
     } catch (err) {
         const message = err.response?.data?.message;
         throw new Error(message);
