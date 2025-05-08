@@ -47,6 +47,7 @@ export function SearchBar() {
           !rounded-full "
           onChange={(e) => setSearch(e.target.value)}
           onKeyPress={(e) => e.key === "Enter" && handleSearch()}
+          value={search}
         />
       <div className="absolute flex items-center top-1/2 translate-y-[-50%] right-0.5 px-6 
           bg-primary h-[90%] rounded-full cursor-pointer transition hover:scale-95" 
@@ -60,9 +61,9 @@ export function SearchBar() {
       </div>
 
       {/* Search Results Dropdown */}
-      {(isLoading || isError || (data && data.length > 0)) && (
+      {(isLoading || isError || (data && data.length > 0) ) && (
         <div className="absolute left-0 w-full mt-2 bg-white shadow-xl 
-          rounded-lg border border-gray-200 z-10 max-h-72 overflow-y-auto">
+          rounded-lg border border-gray-200 z-10 max-h-72 overflow-y-auto" onClick={() => setSearch("")}>
           {isLoading && ( <div className="p-4 text-center text-gray-500">Loading...</div>)}
           {isError && ( <div className="p-4 text-center text-red-500"> Error fetching results </div>)}
           {data && data.length > 0 && (

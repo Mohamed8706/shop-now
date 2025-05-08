@@ -39,17 +39,17 @@ export default function SingleProduct() {
     const totalPrice = qty * product?.price;
     if (isFetching) return <SingleProductSekelton />;
     return (
-        <div className="py-16 px-3">
+        <div className="py-16 px-3 mt-3">
             <div className="w-full flex gap-10 lg:gap-32 flex-wrap">
                 <ImageGallery images={images}  />
                 <div className="w-full md:w-2/5">
                 {/* Card Content */}
                     <div className="flex flex-col flex-wrap f-cairo w-full h-full gap-4">
                         <h1 className="text-[#333333] text-wrap">
-                            {product.title}
+                            {product?.title}
                         </h1>
                         <div className="flex justify-start items-center gap-2 font-bold">
-                            <RatingStars rating={product.rating} />
+                            <RatingStars rating={product?.rating} />
                         </div>
 
                         {/* Price And Quantity */}

@@ -2,7 +2,7 @@ export default function SingleProductSekelton() {
 
     return (
             
-            <div className="w-full flex gap-10 mt-10 lg:gap-32 flex-wrap">
+            <div className="w-full flex gap-10 mt-25 lg:gap-32 flex-wrap">
                 <div className="w-full md:w-2/5 loading-animation flex justify-center h-72 rounded-lg  overflow-hidden">
                     <div className="img-holder p-4 gap-4 flex items-end justify-center
                         bg-gray-200 md:h-full col-10 border-[2px]  border-gray-700 m-0 ">

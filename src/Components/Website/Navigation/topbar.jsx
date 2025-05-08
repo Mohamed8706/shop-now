@@ -1,11 +1,11 @@
 import { SearchBar } from './SearchBar';
-import { Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { UserIcon } from './UserIcon';
 import AddToCartPopup from '../../../helpers/AddToCartPopUp';
 import Cart from './../Utils/Cart';
 import Logo from './../../../Assets/Elegant_Online_Shopping_Logo_Template-removebg-preview.png';
 import { useEffect, useState } from 'react';
+import SearchIcon from './SearchIcon';
 
 
 
@@ -28,30 +28,32 @@ export default function TopBar() {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);    
     }, [prevScrollPos])
+
     return (
         <>
         <AddToCartPopup />
-    
-        <nav className={`py-2 fixed z-999 px-3 top-0 right-0 w-full bg-white transition-transform duration-300
-            ${isVisible ? "translate-y-0" : "translate-y-[-100%] "} `}>
+        <nav className={`py-1 relative md:fixed z-999 px-3 border-b border-[#f7f7f7] top-0 right-0 w-full bg-white transition-transform duration-300
+            ${!isVisible ? "translate-y-[-100%]" : "translate-y-0"} `}>
 
-            <Container style={{marginTop: "0px"}}>
-            <div className="flex flex-wrap items-center gap-md-0 gap-4 justify-between">
-                <Link to="/" className="col-3 hover:!bg-transparent">
-                    <img className="w-[200px]" src={Logo} alt="logo" />
+        
+            <div className="flex flex-col md:flex-row flex-wrap items-center gap-1 justify-between">
+                <Link to="/" className="w-3/6 md:w-1/6 hover:!bg-transparent">
+                    <img className="w-full h-full" src={Logo} alt="logo"/>
                 </Link>
-            <div className="col-12 col-md-6 order-md-2 order-3 relative">
+            <div className="col-12 col-md-6 order-md-2 order-3 relative d-none d-md-block flex justify-center">
                 <SearchBar  />
             </div>
 
-            <div className="nav-top order-md-3 gap-4 order-1 col-3 flex justify-end items-center">
+            <div className="nav-top  order-md-3 gap-4 order-1 w-full md:w-1/6 flex justify-center items-center">
                 <Cart />
                 <UserIcon />
+                <SearchIcon />
+            
             </div>
 
             </div>
 
-            </Container>
+       
     
         </nav>
         </>

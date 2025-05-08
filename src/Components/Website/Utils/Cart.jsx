@@ -55,11 +55,11 @@ const renderCartItems = useMemo(() => {
         <>
         <div className="relative">
         {cartData.totalItems > 0 && (
-            <span className="absolute bottom-5 -right-3 bg-red-400 text-white rounded-full w-8 h-8 
+            <span className="absolute bottom-6 -right-3 bg-red-400 text-white rounded-full w-6 h-6 
             flex justify-center items-center">{cartData.totalItems}</span>
         )}
-        <FontAwesomeIcon  onClick={handleShow} className="cursor-pointer"
-        icon={faCartShopping} color="#06c44fcc" fontSize={35}/>
+        <FontAwesomeIcon  onClick={handleShow} className="cursor-pointer rounded-full"
+        icon={faCartShopping} color="#06c44fcc" fontSize={32}/>
         </div>
 
                 

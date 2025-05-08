@@ -16,12 +16,13 @@ export function UserIcon() {
             id="dropdown-basic-button"
             title={
                 <FontAwesomeIcon
-                    className="bg-primary p-2  rounded-full"
+                    className=" p-2  rounded-full"
                     icon={faUserCircle}
-                    color="white"
-                    fontSize={27}
+                    color="#06c44f"
+                    fontSize={32}
                 />
             }
+            className="custom-dropdown"
         >
             {token ? (
                 <>
