@@ -59,7 +59,7 @@ export default function SingleProduct() {
                             <div className="flex gap-3">
                             <h2 className="text-gray-800 font-bold">${product.price}</h2>
                             <p className="text-gray-400 text-3xl line-through">
-                                ${+product.price + +(product.discount * product.price / 100)}</p>
+                                ${+product.price + +(product.discount * product.price / 100).toFixed(0)}</p>
                             </div>
                             </div>                           
                             <div className="gap-1 flex flex-col">
