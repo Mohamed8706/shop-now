@@ -34,7 +34,7 @@ export default function Footer() {
             <img
                 src={Logo}
                 alt="logo"
-                className="w-64 md:w-72 lg:w-80 aspect-[3/1] mb-6"
+                className="w-52 md:w-72 lg:w-80 aspect-[4/1] mb-6"
             />
             <p className="text-left text-lg font-medium text-gray-400 lg:max-w-xs">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sagittis
