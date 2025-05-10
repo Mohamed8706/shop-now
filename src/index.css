@@ -12,6 +12,9 @@ body {
 .f-cairo {
     font-family: 'Cairo', sans-serif !important;
 }
+.f-jakarta {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
 .h-100vh {
     height: 100vh !important;
 }

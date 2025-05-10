@@ -14,9 +14,6 @@ export default function SingleProduct() {
     const [qty, setQty] = useState(1);
     const dispatch =  useDispatch()
 
-
-
-
     // ID
     const { id } = useParams()
     

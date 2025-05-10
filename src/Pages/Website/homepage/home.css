@@ -75,23 +75,15 @@
 .bt:not(:hover){
   transition-duration: 0.3s !important;
 }
-.categories  .dropdown-menu.show{
-  margin-top: 10px;
-  display: grid !important;
-  grid-template-columns:repeat(4, 1fr);
+ .dropdown-menu.show{
+
   gap: 3px !important;
-  padding: 10px !important;
-  width: 40rem;
+  width: 200px;
   max-height: 20rem;
   overflow: auto;
   flex-wrap: wrap;
+  border-radius: 19px;
   
-}
-@media (max-width: 768px) {
-  .categories  .dropdown-menu.show{
-    width: 22rem;
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
 /* Webkit browsers (Chrome, Safari, newer Edge) */
@@ -103,6 +95,7 @@ input[type="number"]::-webkit-inner-spin-button {
 
 /* Firefox */
 input[type="number"] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
