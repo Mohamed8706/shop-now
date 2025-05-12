@@ -46,8 +46,8 @@ export default function TopBar() {
 
             <div className="nav-top  order-md-3 gap-4 order-1 w-full md:w-1/6 flex justify-center items-center">
                 <Cart />
-                <UserIcon />
                 <SearchIcon />
+                <UserIcon />
             
             </div>
 

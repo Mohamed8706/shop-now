@@ -150,7 +150,7 @@ export default function AddProduct() {
     if (isLoading || isEditing) return <LoadingSubmit />;
 
     return (
-        <div className="row" style={{margin: "12px"}}>
+        <div className="row rounded-2xl" >
             <Form onSubmit={handleEdit} className="h-[95%] m-1">
                 <div className="h-100 bg-white p-5 rounded-xl shadow-2xl">
                     <Form.Group className="form-custom" controlId="formcategory">

@@ -171,7 +171,7 @@ export default function ProductUpdate() {
     if (isFetchingSelectedProduct || isUpdating) return <LoadingSubmit />;
 
     return (
-        <div className="row p-2" style={{ margin: "12px" }}>
+        <div className="row p-2 rounded-2xl" style={{ margin: "12px" }}>
             <Form
                 className="border bg-white rounded-xl ml-1 p-4 shadow-2xl h-100"
                 onSubmit={handleUpdate}

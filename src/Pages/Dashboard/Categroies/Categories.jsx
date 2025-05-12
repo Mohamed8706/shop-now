@@ -37,7 +37,7 @@ export default function Categories() {
 
     return (
         <div className="flex justify-center flex-col w-full" id="container">
-            <div className="bg-white rounded p-3 shadow w-[100%] ">
+            <div className="bg-white rounded-2xl p-3 shadow w-[100%] ">
                 <div className="d-flex align-items-center justify-content-between flex-wrap">
                     <h1>Categories Page</h1>
                     <Link

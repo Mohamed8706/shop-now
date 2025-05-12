@@ -44,7 +44,7 @@ if (loading) return <LoadingSubmit />
 
 return (
     <>
-            <div className="row " style={{margin:"15px", height:"70vh"}}>
+            <div className="row rounded-2xl" style={{margin:"5px", height:"70vh"}}>
                 <Form className="form" onSubmit={handleSubmit} style={{padding: "10px"}}>
                     <div className="custom-form">
 

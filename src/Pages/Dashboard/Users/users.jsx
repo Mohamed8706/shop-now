@@ -39,7 +39,7 @@ export default function Users() {
 
     return (
         <div className="flex justify-center w-full">
-        <div className="bg-white rounded p-3 shadow w-[100%]">
+        <div className="bg-white rounded-2xl p-3 shadow w-[100%]">
             <div className="d-flex align-items-center justify-content-between">
             <h1>Users Page</h1>
             <Link

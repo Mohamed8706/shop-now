@@ -6,11 +6,13 @@ import Cookie from "cookie-universal";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ChartBarBig, Home, LogInIcon, UserPlus } from "lucide-react";
+import LoadingSubmit from './../../Loading/loading';
+import userIcon from "../../../Assets/user-1.jpg";
 
 export function UserIcon() {
   const cookies = Cookie();
   const token = cookies.get("e-commerce");
-  const { logout, user } = useAuth();
+  const { logout, user, isLoggingOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -54,7 +56,7 @@ export function UserIcon() {
       },
     },
   };
-
+if (isLoggingOut) return <LoadingSubmit></LoadingSubmit>
   return (
     <div className="relative" ref={dropdownRef}>
       <FontAwesomeIcon
@@ -64,7 +66,8 @@ export function UserIcon() {
         fontSize={32}
         onClick={() => setIsOpen(!isOpen)}
       />
-
+      {/* <img src={userIcon} alt="" className="w-12 h-12 rounded-full cursor-pointer" 
+      onClick={() => setIsOpen(!isOpen)}/> */}
       {/* Dropdown Menu */}
       <AnimatePresence>
         {isOpen && (

@@ -63,7 +63,7 @@ sections.forEach((el) => {
 
     return( 
         <>
-        <div className="row " style={{margin:"25px", height:"70vh"}}>
+        <div className="row rounded-2xl" style={{margin:"25px", height:"70vh"}}>
         <Form className="form" style={{height:"100%", padding: "30px"}} onSubmit={handleUpdate}>
         <Form.Group
             className="form-custom"

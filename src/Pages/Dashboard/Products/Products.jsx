@@ -50,7 +50,7 @@ export default function ProductsPage() {
 
   return (
     <div
-      className="bg-white p-2">
+      className="bg-white p-3 rounded-2xl">
       <div className="d-flex align-items-center justify-content-between">
         <h1>Products Page</h1>
         <Link
