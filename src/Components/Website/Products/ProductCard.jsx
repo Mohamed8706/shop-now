@@ -31,11 +31,6 @@ export default function ProductCard({ data }) {
                         alt={data.title}
                         className="w-full h-full object-cover"
                     />
-                    {data.discount > 0 && (
-                        <span className="absolute top-1 left-1 m-3 w-14 flex justify-center items-center rounded-lg bg-[#a3be4c] text-white font-bold">
-                            -{data.discount}%
-                        </span>
-                    )}
                 </div>
             </Link>
             {/* Card Content */}

@@ -5,6 +5,9 @@ import { WindowSize } from "../../context/windowresize";
 import { links } from "../Website/Utils/links";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../hooks/useAuth";
+import { Rocket, RocketIcon } from "lucide-react";
+import { faRocket } from "@fortawesome/free-solid-svg-icons";
+
 
 export const SideBar = memo(function SideBar() {
     const isOpen = useSelector((state) => state.menu.isOpen);
@@ -14,40 +17,25 @@ export const SideBar = memo(function SideBar() {
 
 
     return (
-        <div
-        className="side-bar bg-white py-3 text-center"
-        style={{
-            width: isOpen
-            ? resizeWidth.windowResizeWidth < "768"
-                ? "fit-content"
-                : "190px"
-            : "fit-content",
-            display: !isOpen && resizeWidth.windowResizeWidth < "768" && "none"
-        }}
-        >
-            {isOpen && resizeWidth.windowResizeWidth > "768" && <h5 className="font-bold">Dashboard</h5>}
-        
-        {links.map((link, key) => {
-            return link.role.includes(user.role) && <NavLink
-            key={key}
-            to={link.path}
-            className={"d-flex align-items-center gap-2"}
-            style={{ padding: isOpen ? "10px 8px 10px 15px" : "10px 10px" }}
-            >
+        <div className="side-bar bg-white  text-center h-full">
+            <div className="w-full flex gap-2 px-3 py-6 items-center h-[86px]">
+            <FontAwesomeIcon icon={faRocket} color="#06c44fcc" size="2xl"/>
+            <h5 className="text-[#333333] font-bold">Spike Admin</h5>
+            </div>
+            <div className="overflow-y-auto w-full links-container" style={{maxHeight: "calc(100% - 60px)"}}>
+            {links.map((link, key) => {
+            return link.role.includes(user.role) && 
+            <NavLink key={key} to={link.path} 
+            className={"flex rounded-e-full items-center mb-1 gap-2 f-jakarta !text-md !font-[500] w-full"}
+            style={{ padding: isOpen ? "10px 8px 10px 15px" : "10px 10px" }}>
+
             <FontAwesomeIcon icon={link.icon} />
-            <p
-                style={{
-                display: isOpen
-                    ? resizeWidth.windowResizeWidth < "768"
-                    ? "none"
-                    : "block"
-                    : "none",
-                }}
-            >
+            <p >
                 {link.name}
             </p>
-            </NavLink>;
-        })}
+            </NavLink>
+            })}
+            </div>
         </div>
     );
     });

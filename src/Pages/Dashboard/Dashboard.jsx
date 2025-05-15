@@ -4,27 +4,24 @@ import { useContext } from "react";
 import { WindowSize } from "../../context/windowresize";
 import NavigationBar from "../../Components/Dashboard/NavBar";
 import { useSelector } from "react-redux";
+import MobileSideBar from "../../Components/Dashboard/MobileSideBar";
+
 
 
 export default function Dashboard() {
     const resizeWidth = useContext(WindowSize);
-
-    const isOpen = useSelector((state) => state.menu.isOpen)
-
+    const isOpen = useSelector((state) => state.menu.isOpen);
     return (
         <>
-    
-                <SideBar />
-            <div className="content-container dashboard h-screen overflow-auto bg-gray-100" >
-                <div style={{width: !isOpen ? resizeWidth.windowResizeWidth > "768" ? "5%" : "0%" : "16.6%"}}  
-                className="w-1/6"></div>
-                <div style={{width: !isOpen ? resizeWidth.windowResizeWidth > "768" ? "95%" : "100%" : "83.3%"}}
-                    className="p-3 "
-                >
+            <SideBar />
+            {resizeWidth.windowResizeWidth < 768 && isOpen && <MobileSideBar />}
+            <div className="content-container dashboard flex overflow-auto bg-gray-100 h-screen" >
+                <div className="p-3 w-full relative overflow-auto">
                     <NavigationBar />
                     <Outlet /> 
                 </div>
             </div>
+
         </>
     );
 }
