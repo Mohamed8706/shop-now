@@ -22,7 +22,7 @@ A modern e-commerce platform built to showcase my full-stack development skills.
 
 ## Installation
 1. Clone the repository:
-   git clone https://github.com/[your-username]/[your-repo-name].git
+git clone https://github.com/Mohamed8706/shop-now
 
 2. Install dependencies:
 npm install
