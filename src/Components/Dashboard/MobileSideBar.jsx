@@ -13,7 +13,7 @@ export default function MobileSideBar() {
     console.log(isOpen)
     return (
         <>
-        <Offcanvas show={isOpen} onHide={() => dispatch(toggleMenu())}  placement="start" className="items-center !w-2/4 f-cairo">
+        <Offcanvas show={isOpen} onHide={() => dispatch(toggleMenu())}  placement="start" className="items-center !w-3/5 f-cairo">
             <Offcanvas.Header  className="text-2xl p-4">
                 <Offcanvas.Title>
                 <h5 className="text-[#333333] font-bold">Spike Admin</h5>
