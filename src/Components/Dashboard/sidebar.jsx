@@ -26,8 +26,7 @@ export const SideBar = memo(function SideBar() {
             {links.map((link, key) => {
             return link.role.includes(user.role) && 
             <NavLink key={key} to={link.path} 
-            className={"flex rounded-e-full items-center mb-1 gap-2 f-jakarta !text-md !font-[500] w-full"}
-            style={{ padding: isOpen ? "10px 8px 10px 15px" : "10px 10px" }}>
+            className={"flex rounded-e-full items-center p-2.5 mb-1 gap-2 f-jakarta !text-md !font-[500] w-full"}>
 
             <FontAwesomeIcon icon={link.icon} />
             <p >
