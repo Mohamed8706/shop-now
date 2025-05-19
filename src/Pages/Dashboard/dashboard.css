@@ -39,13 +39,13 @@
 }
 
 .side-bar a, .links-container a {
-    color: #495057;
+    color: #000000;
     transition: color 0.4s ease !important; 
     position: relative; 
     overflow: hidden; 
 }
 
-.side-bar a:hover svg, .links-container a:hover svg {
+.side-bar a:hover , .links-container a:hover  {
     color: #06c44fcc !important;
 }
 

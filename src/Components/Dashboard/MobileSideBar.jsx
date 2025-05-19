@@ -23,12 +23,12 @@ export default function MobileSideBar() {
                             </div>
                 </Offcanvas.Title>
             </Offcanvas.Header>
-            <Offcanvas.Body className="w-full">
+            <Offcanvas.Body className="w-full !pl-0 !pr-2">
                 <div className="overflow-y-auto w-full links-container" style={{maxHeight: "calc(100% - 60px)"}}>
                             {links.map((link, key) => {
                             return link.role.includes(user.role) && 
                             <NavLink key={key} to={link.path} 
-                            className={"flex rounded-e-full items-center mb-1 p-2.5 gap-2 f-jakarta !text-md !font-[500] w-full"}>
+                            className={"flex rounded-e-full items-center mb-1 p-2.5 pl-2 gap-2 f-jakarta !text-md !font-[500] w-full"}>
                             <FontAwesomeIcon icon={link.icon} />
                             <p >
                                 {link.name}
