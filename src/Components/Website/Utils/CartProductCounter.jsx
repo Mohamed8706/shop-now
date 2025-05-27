@@ -8,7 +8,7 @@ export default function CartProductCounter({ setQty, product }) {
 const count = useSelector((state) => state.cart.items.find((item) => item.id === product.id).count);
 const dispatch = useDispatch();
 
-
+console.log(product.stock)
 const handleDecrease = () => {
         if (count > 1) {
             setQty((prev) => prev - 1);

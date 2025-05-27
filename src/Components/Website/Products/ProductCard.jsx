@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faCartShopping, faCheck, faCheckCircle } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import ProductCounter from "../Utils/ProductCounter";
-import { useDispatch } from "react-redux";
-import { addToCart, handlePopUp } from "../../../Redux/Slices/CartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, handlePopUp, openCart } from "../../../Redux/Slices/CartSlice";
 import { RatingStars } from "../../../helpers/RatingStars";
 
 
@@ -17,8 +17,13 @@ export default function ProductCard({ data }) {
             dispatch(addToCart({product : data, qty}))
             dispatch(handlePopUp("adding"))
             
-        }
+        } 
     };
+    const Cart = useSelector((state) => state.cart.items);
+    const productInCart = Cart?.find((item) => item.id === data.id);
+
+    const handleShow = () => dispatch(openCart("open"));
+
 
     return (
         <div className="rounded-2xl p-3 max-h-[530px] bg-white hover:shadow-xl shadow-custom 
@@ -54,14 +59,23 @@ export default function ProductCard({ data }) {
                 </div>
 
                 <div className="flex items-center justify-between flex-wrap">
+                    {productInCart ? (
+                        <div className="flex justify-end w-full cursor-pointer" onClick={handleShow}>
+                        <FontAwesomeIcon icon={faCartShopping} className="mr-3 text-[#36ce70] " fontSize={27} />
+                        <p className="font-semibold f-cairo">Go To Cart</p>
+                        </div>
+                    ) : (
+                    <>
                     <ProductCounter setQty={setQty} />
-                    <button disabled={qty === 0 || data.stock < qty} onClick={handleAddToCart}>
+                    <button disabled={qty === 0 || data.stock < qty || productInCart} onClick={handleAddToCart}>
                         <FontAwesomeIcon
                             icon={faCartPlus}
-                            className="mr-3 hover:text-[#36ce70] transition-all duration-300"
+                            className={`mr-3 ${!productInCart && "hover:text-[#36ce70]"} transition-all duration-300`}
                             fontSize={27}
                         />
                     </button>
+                    </>
+                    )}
                 </div>
             </div>
         </div>
