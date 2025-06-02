@@ -36,8 +36,8 @@ export default function TopBar() {
             ${!isVisible ? "translate-y-[-100%]" : "translate-y-0"} `}>
 
         
-            <div className="flex flex-col md:flex-row flex-wrap items-center gap-1 justify-between">
-                <Link to="/" className="w-3/6 md:w-1/6 hover:!bg-transparent">
+            <div className="flex flex-col md:flex-row flex-wrap items-center gap-3 justify-between">
+                <Link to="/" className="w-3/7 md:w-1/8 hover:!bg-transparent">
                     <img className="w-full h-full" src={Logo} alt="logo"/>
                 </Link>
             <div className="col-12 col-md-6 order-md-2 order-3 relative d-none d-md-block flex justify-center">
